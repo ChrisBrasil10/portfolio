@@ -14,15 +14,23 @@
       "minor": "Mathematics",
       "expectedGraduation": "May 2026",
       "gpa": "3.54 / 4.00",
+      "logo": "assets/nyu-logo.png",
+      "logoAlt": "New York University logo",
       "coursework": [
         "Operating Systems",
-        "Computer Architecture",
         "Data Structures & Algorithms",
-        "Discrete Mathematics",
         "Object Oriented Programming",
+        "Computer Architecture",
+        "Discrete Mathematics",
         "Software Engineering",
         "Databases",
         "Artificial Intelligence"
+      ],
+      "organizations": [
+        "Global Leaders in STEM Honors Program",
+        "Society of Hispanic Engineers",
+        "Opportunity Program",
+        "Hispanic Scholarship Fund"
       ]
     }
   ],
