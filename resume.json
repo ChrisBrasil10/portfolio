@@ -1,0 +1,142 @@
+{
+  "name": "Chris Brasil",
+  "contact": {
+    "phone": "914-410-7630",
+    "email": "christopherdbrasil@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/chris-brasil",
+    "github": "https://github.com/ChrisBrasil10"
+  },
+  "education": [
+    {
+      "school": "New York University",
+      "location": "New York, NY",
+      "degree": "Bachelor of Science in Computer Science",
+      "minor": "Mathematics",
+      "expectedGraduation": "May 2026",
+      "gpa": "3.54 / 4.00",
+      "coursework": [
+        "Operating Systems",
+        "Computer Architecture",
+        "Data Structures & Algorithms",
+        "Discrete Mathematics",
+        "Object Oriented Programming",
+        "Software Engineering",
+        "Databases",
+        "Artificial Intelligence"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "title": "Software Engineering Intern",
+      "company": "Octozi — Clinical AI Team",
+      "location": "Brooklyn, NY",
+      "date": "Sep 2025 – Present",
+      "responsibilities": [
+        "Engineered a protocol-aware rule generator with LLMs to extract study logic from clinical trial protocols.",
+        "Converted unstructured protocol text into configurable validation checks, reducing manual review for experts.",
+        "Implemented a reviewer interface for editing and deploying suggested rules to ensure clinical transparency."
+      ]
+    },
+    {
+      "title": "Software Engineering Intern",
+      "company": "Whirlpool — ML Team",
+      "location": "Benton Harbor, MI",
+      "date": "May 2025 – Aug 2025",
+      "responsibilities": [
+        "Established a mature end-to-end local database using Room, enabling data storage and adaptive learning.",
+        "Designed production-grade inference APIs to integrate a food recognition model into retail-ready smart ovens.",
+        "Built a complete adaptive data pipeline supporting continuous model improvement within consumer homes."
+      ]
+    },
+    {
+      "title": "Software Engineering Intern",
+      "company": "Whirlpool — Tools Team",
+      "location": "Benton Harbor, MI",
+      "date": "May 2024 – Aug 2024",
+      "responsibilities": [
+        "Developed computer vision algorithms to detect camera obstructions in KitchenAid ovens.",
+        "Deployed an internal support tool for rack-level detection, improving ML model performance.",
+        "Executed real-time testing on oven hardware, yielding 94% accuracy in validation tests."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Rapid Ride",
+      "tech": ["GAML", "SQL"],
+      "location": "Hanoi, Vietnam",
+      "description": [
+        "Utilized digital twin technology to test a virtual scooter program and assess environmental impacts.",
+        "Secured first place for best pitch and program at VinUniversity’s competition.",
+        "Created visualization results using interactive map-based data displays to show air and traffic improvements."
+      ]
+    },
+    {
+      "name": "Health Reflect",
+      "tech": ["HTML", "CSS", "JavaScript", "Python", "Git", "Raspberry Pi"],
+      "location": "Abu Dhabi, UAE",
+      "description": [
+        "Implemented an intelligent mirror to monitor air quality within NYU Abu Dhabi.",
+        "Configured the system on a Raspberry Pi using low-level frameworks to process environmental data.",
+        "Integrated real-time data alerts for users when air quality levels became hazardous."
+      ]
+    },
+    {
+      "name": "ChessBot",
+      "tech": ["C++", "Python", "Git"],
+      "location": "New York, NY",
+      "description": [
+        "Prototyped a functional smart chessboard controlled through voice command in 3 months.",
+        "Assembled a linear motion system with an electromagnet to move pieces automatically.",
+        "Used Google Cloud’s Speech-to-Text API to interpret commands and trigger piece movement.",
+        "Awarded the Gunter Georgi Award for Outstanding Engineering Innovation at NYU."
+      ]
+    }
+  ],
+  "leadership": [
+    {
+      "role": "Global Leader & Scholar in STEM Honors Program",
+      "organization": "NYU Tandon",
+      "date": "May 2023 – Present",
+      "details": [
+        "Recognized among 25 scholars for exemplary leadership and academic distinction.",
+        "Led cross-functional engineering projects addressing UN Sustainable Development Goals."
+      ]
+    },
+    {
+      "role": "Management Leadership for Tomorrow Fellow",
+      "organization": "MLT",
+      "date": "Oct 2023 – Present",
+      "details": [
+        "Participated in leadership training and career acceleration program.",
+        "Engaged with industry leaders to build skills in networking and personal branding."
+      ]
+    }
+  ],
+  "skills": {
+    "languages": [
+      "Java",
+      "Python",
+      "C/C++",
+      "SQL (SQLite)",
+      "JavaScript",
+      "HTML/CSS",
+      "Verilog",
+      "VEX",
+      "GAML"
+    ],
+    "developerTools": [
+      "Git",
+      "Android Studio",
+      "VS Code",
+      "Visual Studio",
+      "PyCharm",
+      "CLion",
+      "Vim",
+      "GAMA",
+      "Jira"
+    ],
+    "spokenLanguages": ["English (Native)", "Portuguese (Native)", "Spanish (Fluent)"]
+  }
+}
