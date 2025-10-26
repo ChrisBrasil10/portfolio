@@ -1,6 +1,6 @@
 const DATA_PATH = 'resume.json';
 const RESUME_PATH = 'assets/Chris__Resume.pdf';
-const TAGLINE = 'Software Engineer | Building creative and impactful technology.';
+const TAGLINE = 'Software Engineer | Developing and Exploring Tech';
 let resumeData = null;
 
 const canvas = document.getElementById('bg-canvas');
@@ -308,54 +308,144 @@ const renderEducation = (education = []) => {
   if (!container) return;
   container.innerHTML = '';
 
+  const createChip = (label, variant = 'default') => {
+    const span = document.createElement('span');
+    const variantClass = variant === 'accent' ? 'edu-chip--accent' : '';
+    span.className = `edu-chip ${variantClass} inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium`;
+    span.textContent = label;
+    return span;
+  };
+
   education.forEach((entry) => {
     const card = document.createElement('article');
-    card.className = 'education-card';
     card.dataset.animate = 'fade';
+    card.className =
+      'relative overflow-hidden rounded-3xl border shadow-2xl backdrop-blur-2xl p-8 md:p-10 flex flex-col gap-8';
+    card.style.background = 'var(--bg-panel-strong)';
+    card.style.borderColor = 'var(--divider-color)';
 
-    const title = document.createElement('h3');
-    title.textContent = entry.school;
+    // GPA badge
+    const gpaBadge = document.createElement('div');
+    gpaBadge.className =
+      'absolute top-6 right-6 inline-flex items-center gap-2 rounded-full border px-4 py-1 text-xs font-semibold tracking-[0.35em]';
+    gpaBadge.style.borderColor = 'var(--divider-color)';
+    gpaBadge.style.background = 'var(--chip-bg-strong)';
+    gpaBadge.style.color = 'var(--text-primary)';
+    gpaBadge.innerHTML = `<span>GPA</span><span class="tracking-normal text-base font-semibold">${entry.gpa || '—'}</span>`;
+    card.appendChild(gpaBadge);
 
-    card.appendChild(title);
+    // Header with logo & degree info
+    const header = document.createElement('div');
+    header.className = 'flex flex-col gap-6 md:flex-row md:items-center md:justify-between';
 
-    if (entry.degree || entry.minor) {
-      const degree = document.createElement('p');
-      const degreeText = [entry.degree, entry.minor ? `Minor in ${entry.minor}` : null]
-        .filter(Boolean)
-        .join(' · ');
-      degree.textContent = degreeText;
-      card.appendChild(degree);
+    const identity = document.createElement('div');
+    identity.className = 'flex items-center gap-4';
+
+    const logoWrap = document.createElement('div');
+    logoWrap.className =
+      'w-16 h-16 rounded-2xl border flex items-center justify-center overflow-hidden';
+    logoWrap.style.borderColor = 'var(--divider-color)';
+    logoWrap.style.background = 'var(--chip-bg)';
+
+    if (entry.logo) {
+      const img = document.createElement('img');
+      img.src = entry.logo;
+      img.alt = entry.logoAlt || `${entry.school || 'University'} logo`;
+      img.loading = 'lazy';
+      img.className = 'w-12 h-12 object-contain';
+      logoWrap.appendChild(img);
+    } else {
+      const initials = document.createElement('span');
+      initials.className = 'text-lg font-semibold tracking-[0.4em] text-white/80';
+      initials.textContent = (entry.school || '')
+        .split(' ')
+        .map((word) => word?.charAt(0) || '')
+        .join('')
+        .slice(0, 3);
+      logoWrap.appendChild(initials);
     }
 
-    const metaParts = [
-      entry.location,
-      entry.expectedGraduation ? `Grad ${entry.expectedGraduation}` : null,
-      entry.gpa ? `GPA ${entry.gpa}` : null,
-    ]
-      .filter(Boolean)
-      .join(' • ');
-    if (metaParts) {
-      const meta = document.createElement('p');
-      meta.textContent = metaParts;
-      card.appendChild(meta);
-    }
+    const schoolBlock = document.createElement('div');
+    const grad = document.createElement('p');
+    grad.className = 'text-xs uppercase tracking-[0.4em] text-[var(--text-muted)] mb-2';
+    grad.textContent = entry.expectedGraduation || '';
 
-    const coursework = document.createElement('details');
-    coursework.className = 'coursework';
-    const summary = document.createElement('summary');
-    summary.textContent = 'Highlighted coursework';
-    coursework.appendChild(summary);
+    const schoolName = document.createElement('h3');
+    schoolName.className = 'text-2xl font-semibold text-[var(--text-primary)] leading-tight';
+    schoolName.textContent = entry.school;
 
-    const list = document.createElement('ul');
-    list.className = 'coursework-list';
+    const degree = document.createElement('p');
+    degree.className = 'text-sm text-[var(--text-muted)]';
+    degree.textContent = entry.minor
+      ? `${entry.degree}, Minor in ${entry.minor}`
+      : entry.degree || '';
+
+    const location = document.createElement('p');
+    location.className = 'text-sm text-[var(--text-muted)]';
+    location.textContent = entry.location || '';
+
+    schoolBlock.append(grad, schoolName, degree, location);
+    identity.append(logoWrap, schoolBlock);
+    header.appendChild(identity);
+    card.appendChild(header);
+
+    // Content sections stacked
+    const contentWrapper = document.createElement('div');
+    contentWrapper.className = 'space-y-6';
+
+    const courseworkSection = document.createElement('div');
+    const courseworkTitle = document.createElement('p');
+    courseworkTitle.className =
+      'text-xs uppercase tracking-[0.4em] text-[var(--text-muted)] mb-3';
+    courseworkTitle.textContent = 'Coursework';
+
+    const courseworkGrid = document.createElement('div');
+    courseworkGrid.className = 'grid gap-2 sm:grid-cols-2';
+
     (entry.coursework || []).forEach((course) => {
-      const li = document.createElement('li');
-      li.textContent = course;
-      list.appendChild(li);
+      courseworkGrid.appendChild(createChip(course));
     });
-    coursework.appendChild(list);
 
-    card.appendChild(coursework);
+    if (!courseworkGrid.childElementCount) {
+      const fallback = document.createElement('p');
+      fallback.className = 'text-sm text-[var(--text-muted)]';
+      fallback.textContent = 'Coursework available on request.';
+      courseworkGrid.appendChild(fallback);
+    }
+
+    courseworkSection.append(courseworkTitle, courseworkGrid);
+
+    const organizationsSection = document.createElement('div');
+    const organizationsTitle = document.createElement('p');
+    organizationsTitle.className =
+      'text-xs uppercase tracking-[0.4em] text-[var(--text-muted)] mb-3';
+    organizationsTitle.textContent = 'Organizations';
+
+    const organizationsWrap = document.createElement('div');
+    organizationsWrap.className = 'flex flex-wrap gap-2';
+
+    const organizationsData =
+      (entry.organizations && entry.organizations.length > 0
+        ? entry.organizations
+        : (resumeData?.leadership || []).map((item) => item.organization)
+      ).filter(Boolean);
+
+    organizationsData.forEach((org) => {
+      organizationsWrap.appendChild(createChip(org, 'accent'));
+    });
+
+    if (!organizationsWrap.childElementCount) {
+      const fallback = document.createElement('p');
+      fallback.className = 'text-sm text-[var(--text-muted)]';
+      fallback.textContent = 'Active learner & collaborator.';
+      organizationsWrap.appendChild(fallback);
+    }
+
+    organizationsSection.append(organizationsTitle, organizationsWrap);
+
+    contentWrapper.append(courseworkSection, organizationsSection);
+    card.appendChild(contentWrapper);
+
     container.appendChild(card);
   });
 };
