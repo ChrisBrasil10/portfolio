@@ -144,6 +144,36 @@ if (colorSchemeQuery.addEventListener) {
   colorSchemeQuery.addListener(handleColorSchemeChange);
 }
 
+// Mobile navigation toggle
+const mobileToggle = document.getElementById('mobile-nav-toggle');
+const mobileOverlay = document.getElementById('mobile-nav-overlay');
+const mobileSheet = document.getElementById('mobile-nav-sheet');
+const mobileLinks = document.querySelectorAll('[data-mobile-nav-link]');
+let isMobileNavOpen = false;
+
+const setMobileNavState = (isOpen) => {
+  if (!mobileOverlay || !mobileSheet) return;
+  isMobileNavOpen = isOpen;
+  mobileOverlay.classList.toggle('active', isOpen);
+  mobileSheet.classList.toggle('active', isOpen);
+  mobileSheet.setAttribute('aria-hidden', String(!isOpen));
+  mobileOverlay.setAttribute('aria-hidden', String(!isOpen));
+};
+
+mobileToggle?.addEventListener('click', () => setMobileNavState(!isMobileNavOpen));
+mobileOverlay?.addEventListener('click', () => setMobileNavState(false));
+mobileLinks.forEach((link) =>
+  link.addEventListener('click', () => {
+    setMobileNavState(false);
+  })
+);
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && isMobileNavOpen) {
+    setMobileNavState(false);
+  }
+});
+
 // Fade-in observer reused after data renders
 const fadeObserver = new IntersectionObserver(
   (entries) => {
