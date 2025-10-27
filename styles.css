@@ -484,6 +484,7 @@ body.light-theme .orbital span {
   background: linear-gradient(160deg, rgba(91, 208, 199, 0.12), transparent 60%);
   opacity: 0;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .project-card:hover::after {
