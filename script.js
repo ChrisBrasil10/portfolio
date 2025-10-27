@@ -183,7 +183,7 @@ const renderHero = (data) => {
     ? `${experienceCount} engineering experiences`
     : 'multi-disciplinary experiences';
   const projectCopy = projectCount ? `${projectCount} experiments` : 'countless experiments';
-  heroSummary.textContent = `Based in ${primaryLocation}, I merge artistic curiosity with rigorous systems thinking across ${experienceCopy} and ${projectCopy}.`;
+  heroSummary.textContent = `Based in ${primaryLocation}, I'm looking to further my skillset as a software developer through personal projects while also looking for a fulltime position.`;
 
   heroLinks.innerHTML = '';
   const contactLinks = [
@@ -269,37 +269,90 @@ const renderProjects = (projects = [], contact = {}) => {
   });
 };
 
-const renderExperience = (experience = []) => {
-  const list = document.getElementById('experience-list');
-  if (!list) return;
-  list.innerHTML = '';
+const renderExperience = (experienceRecords = []) => {
+  const container = document.getElementById('experience-list');
+  if (!container) return;
+  container.innerHTML = '';
 
-  experience.forEach((role) => {
-    const card = document.createElement('article');
-    card.className = 'experience-card';
-    card.dataset.animate = 'fade';
+  const sortedExperience = [...experienceRecords].sort((a, b) => {
+    const orderA = parseInt(a.id, 10) || 0;
+    const orderB = parseInt(b.id, 10) || 0;
+    return orderA - orderB;
+  });
 
-    const heading = document.createElement('h3');
-    const headingText = [role.title, role.company].filter(Boolean).join(' · ');
-    heading.textContent = headingText || role.title || role.company || 'Experience';
+  sortedExperience.forEach((role, index) => {
+    const entry = document.createElement('article');
+    entry.className = 'experience-entry';
+    entry.dataset.animate = 'fade';
 
-    const metaParts = [role.location, role.date].filter(Boolean).join(' • ');
-    if (metaParts) {
-      const meta = document.createElement('p');
-      meta.textContent = metaParts;
-      card.appendChild(meta);
+    const marker = document.createElement('div');
+    marker.className = 'experience-marker';
+    marker.textContent = String(index + 1).padStart(2, '0');
+
+    const summaryCard = document.createElement('div');
+    summaryCard.className = 'experience-summary-card flex flex-col gap-4';
+    summaryCard.innerHTML = `
+      <div class="flex items-start gap-4">
+        <div class="experience-logo">
+          ${
+            role.logo
+              ? `<img src="${role.logo}" alt="${role.logoAlt || role.company}" class="w-12 h-12 object-contain" loading="lazy" />`
+              : `<span class="text-lg font-semibold tracking-[0.4em] text-white/80">${(role.company || '')
+                  .split(' ')
+                  .map((word) => word.charAt(0))
+                  .join('')
+                  .slice(0, 3)}</span>`
+          }
+        </div>
+        <div>
+          <p class="experience-summary-meta">${role.date || ''}</p>
+          <h3>${role.company || 'Experience'}</h3>
+          <p class="text-sm text-[var(--text-muted)]">${role.title || ''}</p>
+        </div>
+      </div>
+      <p class="text-sm text-[var(--text-muted)]">${role.location || ''}</p>
+      ${
+        role.teamFocus
+          ? `<p class="text-xs uppercase tracking-[0.4em] text-[var(--text-muted)]">${role.teamFocus}</p>`
+          : ''
+      }
+      <p class="experience-description">${role.description || ''}</p>
+    `;
+
+    const detailCard = document.createElement('div');
+    detailCard.className = 'experience-detail-card';
+
+    if (role.highlights && role.highlights.length > 0) {
+      const section = document.createElement('section');
+      section.innerHTML = '<h4>Highlights</h4>';
+      const list = document.createElement('ul');
+      list.className = 'experience-highlights';
+      role.highlights.forEach((item) => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        list.appendChild(li);
+      });
+      section.appendChild(list);
+      detailCard.appendChild(section);
     }
 
-    const bullets = document.createElement('ul');
-    (role.responsibilities || []).forEach((item) => {
-      const li = document.createElement('li');
-      li.textContent = item;
-      bullets.appendChild(li);
-    });
+    if (role.tags && role.tags.length > 0) {
+      const tagsSection = document.createElement('section');
+      tagsSection.innerHTML = '<h4>Technologies</h4>';
+      const tagWrap = document.createElement('div');
+      tagWrap.className = 'experience-tags';
+      role.tags.forEach((tag) => {
+        const span = document.createElement('span');
+        span.className = 'experience-tag';
+        span.textContent = tag;
+        tagWrap.appendChild(span);
+      });
+      tagsSection.appendChild(tagWrap);
+      detailCard.appendChild(tagsSection);
+    }
 
-    card.prepend(heading);
-    card.appendChild(bullets);
-    list.appendChild(card);
+    entry.append(marker, summaryCard, detailCard);
+    container.appendChild(entry);
   });
 };
 
