@@ -206,7 +206,18 @@ const renderHero = (data) => {
   }
 };
 
-const renderProjects = (projects = [], contact = {}) => {
+const resolveRepoLink = (project = {}, repoMap = {}, contact = {}) => {
+  if (project.repo) return project.repo;
+  const identifiers = [project.id, project.slug, project.name].filter(Boolean);
+  for (const key of identifiers) {
+    if (repoMap && repoMap[key]) {
+      return repoMap[key];
+    }
+  }
+  return project.link || contact.github || '#';
+};
+
+const renderProjects = (projects = [], contact = {}, repoMap = {}) => {
   const grid = document.getElementById('projects-grid');
   if (!grid) return;
   grid.innerHTML = '';
@@ -219,7 +230,7 @@ const renderProjects = (projects = [], contact = {}) => {
     const title = document.createElement('h3');
     title.textContent = project.name;
     
-    const metaText = [project.location, project.tech?.join(' • ')].filter(Boolean).join('\n');
+    const metaText = [project.location].filter(Boolean).join('\n');
     if (metaText) {
       const meta = document.createElement('p');
       meta.style.whiteSpace = 'pre-line';
@@ -255,18 +266,22 @@ const renderProjects = (projects = [], contact = {}) => {
 
     const actions = document.createElement('div');
     actions.className = 'project-card__actions';
-    const githubButton = document.createElement('a');
-    githubButton.className = 'btn btn--ghost';
-    githubButton.textContent = 'View on GitHub';
-    const repoLink = project.repo || project.link || contact.github || '#';
-    githubButton.href = repoLink;
-    githubButton.target = '_blank';
-    githubButton.rel = 'noopener';
-    actions.appendChild(githubButton);
+
+    const repoLink = resolveRepoLink(project, repoMap, contact);
+    if (repoLink && repoLink !== '#') {
+      const githubButton = document.createElement('a');
+      githubButton.className = 'btn btn--ghost';
+      githubButton.textContent = 'View on GitHub';
+      githubButton.href = repoLink;
+      githubButton.target = '_blank';
+      githubButton.rel = 'noopener noreferrer';
+      actions.appendChild(githubButton);
+    }
 
     card.prepend(title);
     card.append(actions);
     grid.appendChild(card);
+
   });
 };
 
@@ -554,7 +569,7 @@ const hydrateSite = async () => {
     window.cbData = data; // expose for debugging
 
     renderHero(data);
-    renderProjects(data.projects, data.contact);
+    renderProjects(data.projects, data.contact, data.githubRepos || {});
     renderExperience(data.experience);
     renderEducation(data.education);
     renderSkills(data.skills);
