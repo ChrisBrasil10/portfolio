@@ -96,7 +96,8 @@
         "Utilized digital twin technology to test a virtual scooter program and assess environmental impacts.",
         "Secured first place for best pitch and program at VinUniversity’s competition.",
         "Created visualization results using interactive map-based data displays to show air and traffic improvements."
-      ]
+      ],
+      "repo": "https://github.com/ChrisBrasil10/Rapid-Ride"
     },
     {
       "name": "Health Reflect",
@@ -106,7 +107,8 @@
         "Implemented an intelligent mirror to monitor air quality within NYU Abu Dhabi.",
         "Configured the system on a Raspberry Pi using low-level frameworks to process environmental data.",
         "Integrated real-time data alerts for users when air quality levels became hazardous."
-      ]
+      ],
+      "repo": "https://github.com/ChrisBrasil10/Health-Reflect"
     },
     {
       "name": "ChessBot",
@@ -117,7 +119,8 @@
         "Assembled a linear motion system with an electromagnet to move pieces automatically.",
         "Used Google Cloud’s Speech-to-Text API to interpret commands and trigger piece movement.",
         "Awarded the Gunter Georgi Award for Outstanding Engineering Innovation at NYU."
-      ]
+      ],
+      "repo": "https://github.com/ChrisBrasil10/ChessBot"
     }
   ],
   "leadership": [
