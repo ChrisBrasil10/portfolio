@@ -218,10 +218,11 @@ const renderProjects = (projects = [], contact = {}) => {
 
     const title = document.createElement('h3');
     title.textContent = project.name;
-
-    const metaText = [project.location, project.tech?.join(' • ')].filter(Boolean).join(' • ');
+    
+    const metaText = [project.location, project.tech?.join(' • ')].filter(Boolean).join('\n');
     if (metaText) {
       const meta = document.createElement('p');
+      meta.style.whiteSpace = 'pre-line';
       meta.className = 'project-meta';
       meta.textContent = metaText;
       card.appendChild(meta);
