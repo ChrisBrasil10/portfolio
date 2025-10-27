@@ -36,37 +36,55 @@
   ],
   "experience": [
     {
+      "id": "01",
+      "company": "Octozi",
       "title": "Software Engineering Intern",
-      "company": "Octozi — Clinical AI Team",
-      "location": "Brooklyn, NY",
-      "date": "Sep 2025 – Present",
-      "responsibilities": [
-        "Engineered a protocol-aware rule generator with LLMs to extract study logic from clinical trial protocols.",
-        "Converted unstructured protocol text into configurable validation checks, reducing manual review for experts.",
-        "Implemented a reviewer interface for editing and deploying suggested rules to ensure clinical transparency."
-      ]
+      "teamFocus": "Clinical AI Team",
+      "date": "Sept 2024 – Present",
+      "location": "New York, NY · Remote",
+      "logo": "assets/octozi-logo.png",
+      "logoAlt": "Octozi logo",
+      "description": "Supported the development of internal data automation systems used to validate clinical trial datasets and ensure compliance with biomedical standards.",
+      "highlights": [
+        "Designed and implemented automated CSV validation/export pipelines using Polars and Python.",
+        "Contributed to backend data integration logic for domain validation in Flask.",
+        "Created React components for analytics dashboards visualizing processed clinical data."
+      ],
+      "tags": ["Python", "Flask", "React", "Polars", "Data Systems"]
     },
     {
+      "id": "02",
+      "company": "Whirlpool Corporation",
       "title": "Software Engineering Intern",
-      "company": "Whirlpool — ML Team",
-      "location": "Benton Harbor, MI",
-      "date": "May 2025 – Aug 2025",
-      "responsibilities": [
-        "Established a mature end-to-end local database using Room, enabling data storage and adaptive learning.",
-        "Designed production-grade inference APIs to integrate a food recognition model into retail-ready smart ovens.",
-        "Built a complete adaptive data pipeline supporting continuous model improvement within consumer homes."
-      ]
-    },
-    {
-      "title": "Software Engineering Intern",
-      "company": "Whirlpool — Tools Team",
-      "location": "Benton Harbor, MI",
+      "teamFocus": "Machine Learning Team",
       "date": "May 2024 – Aug 2024",
-      "responsibilities": [
-        "Developed computer vision algorithms to detect camera obstructions in KitchenAid ovens.",
-        "Deployed an internal support tool for rack-level detection, improving ML model performance.",
-        "Executed real-time testing on oven hardware, yielding 94% accuracy in validation tests."
-      ]
+      "location": "Benton Harbor, MI",
+      "logo": "assets/whirlpool-logo.png",
+      "logoAlt": "Whirlpool Corporation logo",
+      "description": "Developing AI-powered cooking systems for next-generation smart ovens, combining on-device inference, adaptive learning pipelines, and embedded database systems.",
+      "highlights": [
+        "Established a mature end-to-end local database using Room (SQLite) to enable dynamic data storage and adaptive model learning.",
+        "Designed and deployed production-grade inference APIs integrating a food recognition model directly into retail-ready smart ovens.",
+        "Built a complete adaptive data pipeline that supports continuous model improvement from consumer feedback within connected homes."
+      ],
+      "tags": ["Java", "SQLite", "TensorFlow", "Android Studio"]
+    },
+    {
+      "id": "03",
+      "company": "Whirlpool Corporation",
+      "title": "Software Engineering Intern",
+      "teamFocus": "Tools Team",
+      "date": "June 2023 – Aug 2023",
+      "location": "Benton Harbor, MI",
+      "logo": "assets/whirlpool-logo.png",
+      "logoAlt": "Whirlpool Tools Team logo",
+      "description": "Supported development of AI-assisted camera-based detection systems for next-gen appliance diagnostics with an emphasis on early-stage computer vision models.",
+      "highlights": [
+        "Developed computer vision algorithms to accurately detect camera obstructions in KitchenAid ovens.",
+        "Deployed an internal support tool for rack-level detection, notably improving the performance of oven ML models.",
+        "Executed real-time testing on an oven featuring my algorithms for on-product validation, yielding 94% accuracy."
+      ],
+      "tags": ["Python", "TensorFlow", "OpenCV", "Android Studio", "Java"]
     }
   ],
   "projects": [
