@@ -85,65 +85,6 @@ scrollTriggers.forEach((trigger) => {
   });
 });
 
-// Theme toggle
-const THEME_KEY = 'cb-theme';
-const storage = {
-  get: (key) => {
-    try {
-      return localStorage.getItem(key);
-    } catch (error) {
-      console.warn('Storage unavailable', error);
-      return null;
-    }
-  },
-  set: (key, value) => {
-    try {
-      localStorage.setItem(key, value);
-    } catch (error) {
-      console.warn('Unable to persist theme preference', error);
-    }
-  },
-};
-const themeToggle = document.getElementById('theme-toggle');
-let themeTransitionTimer;
-const applyTheme = (theme) => {
-  document.body.classList.toggle('light-theme', theme === 'light');
-  particleRGB = getParticleRGB();
-};
-
-const enableThemeTransition = () => {
-  document.body.classList.add('theme-transition');
-  clearTimeout(themeTransitionTimer);
-  themeTransitionTimer = window.setTimeout(() => {
-    document.body.classList.remove('theme-transition');
-  }, 500);
-};
-
-const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: light)');
-const storedTheme = storage.get(THEME_KEY);
-applyTheme(storedTheme || (colorSchemeQuery.matches ? 'light' : 'dark'));
-
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    const nextTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
-    enableThemeTransition();
-    applyTheme(nextTheme);
-    storage.set(THEME_KEY, nextTheme);
-  });
-}
-
-const handleColorSchemeChange = (event) => {
-  if (!storage.get(THEME_KEY)) {
-    applyTheme(event.matches ? 'light' : 'dark');
-  }
-};
-
-if (colorSchemeQuery.addEventListener) {
-  colorSchemeQuery.addEventListener('change', handleColorSchemeChange);
-} else if (colorSchemeQuery.addListener) {
-  colorSchemeQuery.addListener(handleColorSchemeChange);
-}
-
 // Mobile navigation toggle
 const mobileToggle = document.getElementById('mobile-nav-toggle');
 const mobileOverlay = document.getElementById('mobile-nav-overlay');
@@ -173,6 +114,19 @@ window.addEventListener('keydown', (event) => {
     setMobileNavState(false);
   }
 });
+
+const siteHeader = document.querySelector('.site-header');
+const updateHeaderOnScroll = () => {
+  if (!siteHeader) return;
+  if (window.scrollY > 8) {
+    siteHeader.classList.add('scrolled');
+  } else {
+    siteHeader.classList.remove('scrolled');
+  }
+};
+
+updateHeaderOnScroll();
+window.addEventListener('scroll', updateHeaderOnScroll);
 
 // Fade-in observer reused after data renders
 const fadeObserver = new IntersectionObserver(
