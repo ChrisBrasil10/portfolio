@@ -61,7 +61,7 @@
       "location": "Benton Harbor, MI",
       "logo": "assets/whirlpool-logo.png",
       "logoAlt": "Whirlpool Corporation logo",
-      "description": "Developing AI-powered cooking systems for next-generation smart ovens, combining on-device inference, adaptive learning pipelines, and embedded database systems.",
+      "description": "Developed AI-powered cooking systems for next-generation smart ovens, combining on-device inference, adaptive learning pipelines, and embedded database systems.",
       "highlights": [
         "Established a mature end-to-end local database using Room (SQLite) to enable dynamic data storage and adaptive model learning.",
         "Designed and deployed production-grade inference APIs integrating a food recognition model directly into retail-ready smart ovens.",
