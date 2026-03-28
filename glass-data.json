@@ -1,0 +1,165 @@
+{
+  "program": {
+    "name": "GLASS",
+    "fullName": "Global Leaders and Scholars in STEM",
+    "institution": "NYU Tandon School of Engineering",
+    "duration": "3 years",
+    "cohort": "2023–2026",
+    "mission": "A true global leader is a visionary who can explore the intricacies of our undeniably interconnected world with elegance and insight.",
+    "description": "GLASS is a three-year honors initiative at NYU Tandon that combines research, global experiences, and interdisciplinary learning. Scholars connect their engineering work to the NAE Grand Challenges and UN Sustainable Development Goals — building the skills to solve the world's most pressing problems.",
+    "frameworks": ["NAE Grand Challenges", "UN Sustainable Development Goals"],
+    "stats": [
+      { "value": "3", "label": "Years" },
+      { "value": "25", "label": "Scholars" },
+      { "value": "4", "label": "Continents" },
+      { "value": "2+", "label": "UN SDGs addressed" }
+    ]
+  },
+  "sdgs": [
+    {
+      "number": 3,
+      "name": "Good Health & Well-Being",
+      "description": "Ensure healthy lives and promote well-being for all ages.",
+      "color": "#4C9F38"
+    },
+    {
+      "number": 9,
+      "name": "Industry, Innovation & Infrastructure",
+      "description": "Build resilient infrastructure and foster innovation.",
+      "color": "#F36D25"
+    },
+    {
+      "number": 11,
+      "name": "Sustainable Cities & Communities",
+      "description": "Make cities and human settlements inclusive and sustainable.",
+      "color": "#F99D26"
+    },
+    {
+      "number": 13,
+      "name": "Climate Action",
+      "description": "Take urgent action to combat climate change and its impacts.",
+      "color": "#3F7E44"
+    }
+  ],
+  "journey": [
+    {
+      "id": "01",
+      "year": "2023",
+      "month": "Fall",
+      "category": "milestone",
+      "categoryLabel": "Program Start",
+      "title": "Admitted to GLASS Honors Program",
+      "location": "Brooklyn, NY",
+      "description": "Selected among 25 scholars at NYU Tandon recognized for academic distinction and global leadership potential. Began a 3-year interdisciplinary journey connecting engineering to the world's most critical challenges.",
+      "sdgs": [9],
+      "type": "milestone"
+    },
+    {
+      "id": "02",
+      "year": "2024",
+      "month": "January",
+      "category": "service",
+      "categoryLabel": "Service & Leadership",
+      "title": "ADRA Beach Cleanup",
+      "location": "Rio de Janeiro, Brazil",
+      "description": "Volunteered with ADRA during J-term 2024 for an environmental cleanup initiative on Rio's beaches. Brought an engineering perspective to understand waste management challenges and coastal ecosystem preservation in a developing urban context.",
+      "sdgs": [13],
+      "type": "experience"
+    },
+    {
+      "id": "03",
+      "year": "2024",
+      "month": "Spring",
+      "category": "global",
+      "categoryLabel": "Global Competency",
+      "title": "NYU Abu Dhabi Study Abroad",
+      "location": "Abu Dhabi, UAE",
+      "description": "Completed a 4-month study abroad at NYU Abu Dhabi. Immersed in an international academic environment with students from 80+ countries. Built Health Reflect — an intelligent smart mirror monitoring indoor air quality using real-time environmental sensors and a Raspberry Pi.",
+      "project": {
+        "name": "Health Reflect",
+        "tech": ["HTML/CSS", "JavaScript", "Python", "Raspberry Pi", "AQI API"],
+        "repo": "https://github.com/ChrisBrasil10/Health-Reflect"
+      },
+      "sdgs": [3, 11],
+      "type": "experience"
+    },
+    {
+      "id": "04",
+      "year": "2024",
+      "month": "Spring",
+      "category": "global",
+      "categoryLabel": "Global Competency",
+      "title": "VinUniversity — Agent-Based Urban Modeling",
+      "location": "Hanoi, Vietnam",
+      "description": "Participated in a project-based engineering program at VinUniversity (Cornell/UPenn collaboration). Collaborated with Vietnamese and international students to design urban road systems using agent-based modeling. Studied sustainable urban planning under Professor Nguyen Ngoc Doanh. Rapid Ride won first place for best pitch and program at VinUniversity's competition.",
+      "project": {
+        "name": "Rapid Ride",
+        "tech": ["GAML", "SQL", "Agent-Based Modeling"],
+        "repo": "https://github.com/ChrisBrasil10/Rapid-Ride"
+      },
+      "sdgs": [11, 13],
+      "type": "experience"
+    },
+    {
+      "id": "05",
+      "year": "2024",
+      "month": "Summer",
+      "category": "professional",
+      "categoryLabel": "Professional Development",
+      "title": "Whirlpool ML Internship",
+      "location": "Benton Harbor, MI",
+      "description": "Secured through networking at SHPE National Conference. Joined the Machine Learning team to develop computer vision algorithms detecting camera obstructions in KitchenAid smart ovens, achieving 94% detection accuracy. Presented findings directly to KitchenAid stakeholders at an executive review.",
+      "sdgs": [9],
+      "type": "experience"
+    },
+    {
+      "id": "06",
+      "year": "2024",
+      "month": "Fall",
+      "category": "professional",
+      "categoryLabel": "Professional Development",
+      "title": "SHPE National Conference",
+      "location": "Salt Lake City, UT",
+      "description": "Attended the Society of Hispanic Professional Engineers National Conference. Connected with engineers across industries including aerospace, tech, and consumer electronics. Secured the Whirlpool ML internship through relationships built at the event — a direct example of the professional development GLASS cultivates.",
+      "sdgs": [],
+      "type": "experience"
+    },
+    {
+      "id": "07",
+      "year": "2024",
+      "month": "Fall",
+      "category": "service",
+      "categoryLabel": "Service & Leadership",
+      "title": "NYU Climate Week Kickoff",
+      "location": "New York, NY",
+      "description": "Served as volunteer coordinator for NYU's Climate Week Kickoff, organizing a sustainable art installation that engaged the campus community in environmental storytelling. Helped connect STEM students with the broader climate action narrative.",
+      "sdgs": [13],
+      "type": "experience"
+    },
+    {
+      "id": "08",
+      "year": "2024",
+      "month": "Fall",
+      "category": "academic",
+      "categoryLabel": "Academic Excellence",
+      "title": "NYU × Amazon Mini Hackathon",
+      "location": "New York, NY",
+      "description": "Built an Amazon Alexa skill for automated coding interview moderation as part of the NYU × Amazon hackathon. The skill guided candidates through structured technical questions with real-time feedback, demonstrating the intersection of voice AI and software engineering education.",
+      "sdgs": [9],
+      "type": "experience"
+    },
+    {
+      "id": "09",
+      "year": "2025–2026",
+      "month": "",
+      "category": "capstone",
+      "categoryLabel": "Capstone",
+      "title": "GLASS Capstone — Paper & Poster",
+      "location": "New York, NY",
+      "description": "The culminating GLASS project: a research paper and public poster presentation synthesizing the full three-year journey. Will connect engineering work across Abu Dhabi, Vietnam, Rio de Janeiro, and New York to at least two UN SDGs, demonstrating globally competent and socially responsible engineering practice.",
+      "sdgs": [9, 11, 13],
+      "type": "milestone",
+      "upcoming": true
+    }
+  ]
+}

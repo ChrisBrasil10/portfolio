@@ -1,0 +1,514 @@
+/* ============================================================
+   GLASS Page — Specific Styles
+   Loaded after styles.css; inherits all CSS custom properties
+   ============================================================ */
+
+/* ── Hero ───────────────────────────────────────────────── */
+
+.glass-hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 4rem 0 3rem;
+  position: relative;
+}
+
+.glass-hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(3.5rem, 9vw, 6.5rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  background: var(--gradient-header);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  max-width: 14ch;
+  margin: 0;
+}
+
+.glass-hero__mission {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: var(--text-muted);
+  max-width: 58ch;
+  line-height: 1.75;
+  font-style: italic;
+  border-left: 2px solid var(--accent-main);
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.glass-hero__frameworks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.glass-framework-badge {
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 168, 56, 0.30);
+  background: rgba(232, 168, 56, 0.07);
+  color: var(--accent-main);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Header Badge ───────────────────────────────────────── */
+
+.glass-header-badge {
+  background: rgba(232, 168, 56, 0.10);
+  border-color: rgba(232, 168, 56, 0.35);
+  color: var(--accent-main);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+/* ── About Section ──────────────────────────────────────── */
+
+.glass-about__layout {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .glass-about__layout {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.glass-about__description {
+  color: var(--text-muted);
+  line-height: 1.8;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.glass-about__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.glass-stat {
+  text-align: center;
+  padding: 1.75rem 1rem;
+  border-radius: 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--divider-color);
+  backdrop-filter: blur(14px);
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.glass-stat:hover {
+  border-color: rgba(232, 168, 56, 0.25);
+  transform: translateY(-3px);
+}
+
+.glass-stat__value {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--accent-main);
+  line-height: 1;
+  display: block;
+}
+
+.glass-stat__label {
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+  display: block;
+}
+
+/* ── Filter Tabs ────────────────────────────────────────── */
+
+.glass-filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  margin-top: 0.25rem;
+}
+
+.glass-filter-tab {
+  padding: 0.4rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--divider-color);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.glass-filter-tab:hover {
+  border-color: rgba(232, 168, 56, 0.35);
+  color: var(--text-primary);
+}
+
+.glass-filter-tab.active {
+  border-color: var(--accent-main);
+  color: var(--accent-main);
+  background: rgba(232, 168, 56, 0.08);
+  font-weight: 600;
+}
+
+/* ── Timeline ───────────────────────────────────────────── */
+
+.glass-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-left: 3rem;
+}
+
+.glass-timeline::before {
+  content: '';
+  position: absolute;
+  left: 1.15rem;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  width: 1px;
+  background: linear-gradient(180deg, var(--accent-main), rgba(232, 168, 56, 0.05));
+}
+
+.glass-timeline-entry {
+  position: relative;
+  padding: 2rem 0 2rem 2rem;
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.glass-timeline-entry:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 900px) {
+  .glass-timeline-entry {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2.5rem;
+    padding-left: 0;
+  }
+
+  .glass-timeline-dot {
+    left: -1.85rem !important;
+  }
+}
+
+.glass-timeline-entry--upcoming {
+  opacity: 0.55;
+}
+
+.glass-timeline-dot {
+  position: absolute;
+  left: -2.8rem;
+  top: 2.2rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-main);
+  border: 3px solid #0f0f0f;
+  box-shadow: 0 0 10px rgba(232, 168, 56, 0.5);
+  flex-shrink: 0;
+}
+
+.glass-timeline-entry--milestone .glass-timeline-dot {
+  width: 20px;
+  height: 20px;
+  left: -3.05rem;
+  top: 2rem;
+  box-shadow: 0 0 16px rgba(232, 168, 56, 0.65);
+}
+
+@media (min-width: 900px) {
+  .glass-timeline-entry--milestone .glass-timeline-dot {
+    left: -1.95rem !important;
+  }
+}
+
+.glass-entry-year {
+  padding-top: 0.15rem;
+}
+
+.glass-entry-year-label {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-main);
+  line-height: 1.1;
+  display: block;
+}
+
+.glass-entry-year-month {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 0.15rem;
+}
+
+.glass-entry-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.glass-entry-category {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  width: fit-content;
+}
+
+.glass-entry-category--milestone { color: var(--accent-main); }
+.glass-entry-category--global    { color: #7eb8f7; }
+.glass-entry-category--service   { color: #72c18a; }
+.glass-entry-category--academic  { color: #a78bfa; }
+.glass-entry-category--professional { color: #f0a27a; }
+.glass-entry-category--capstone  { color: var(--accent-secondary); }
+
+.glass-entry-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.glass-entry-location {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+.glass-entry-description {
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+/* ── Inline Project Card ────────────────────────────────── */
+
+.glass-entry-project {
+  background: rgba(232, 168, 56, 0.05);
+  border: 1px solid rgba(232, 168, 56, 0.15);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.25rem;
+}
+
+.glass-project-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.glass-project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.glass-project-tech-tag {
+  font-size: 0.78rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--divider-color);
+  color: var(--accent-main);
+  background: rgba(232, 168, 56, 0.05);
+}
+
+.glass-project-link {
+  font-size: 0.82rem;
+  color: var(--accent-main);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: fit-content;
+  position: relative;
+  padding-bottom: 1px;
+}
+
+.glass-project-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+
+.glass-project-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── SDG Chips on timeline entries ──────────────────────── */
+
+.glass-entry-sdgs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.1rem;
+}
+
+.glass-sdg-chip {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 168, 56, 0.20);
+  color: var(--text-muted);
+  background: rgba(232, 168, 56, 0.04);
+}
+
+/* ── Impact / SDG Grid ──────────────────────────────────── */
+
+.glass-impact__intro {
+  color: var(--text-muted);
+  max-width: 64ch;
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+
+.glass-sdg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.glass-sdg-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--divider-color);
+  border-radius: 20px;
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-sdg-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(232, 168, 56, 0.25);
+}
+
+.glass-sdg-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--sdg-color, var(--accent-main));
+  border-radius: 20px 20px 0 0;
+}
+
+.glass-sdg-number {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--accent-main);
+  line-height: 1;
+}
+
+.glass-sdg-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.glass-sdg-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.glass-sdg-count {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-main);
+  margin-top: 0.5rem;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+
+.glass-footer {
+  border-top: 1px solid var(--divider-color);
+  padding-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.glass-back-link {
+  color: var(--accent-main);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: opacity 0.2s ease;
+}
+
+.glass-back-link:hover {
+  opacity: 0.75;
+}
+
+/* ── Mobile ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .glass-hero h1 {
+    font-size: clamp(2.8rem, 12vw, 4.5rem);
+  }
+
+  .glass-timeline {
+    padding-left: 2rem;
+  }
+
+  .glass-timeline::before {
+    left: 0.85rem;
+  }
+
+  .glass-timeline-dot {
+    left: -1.65rem;
+  }
+
+  .glass-timeline-entry--milestone .glass-timeline-dot {
+    left: -1.85rem;
+  }
+
+  .glass-about__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .glass-header-badge {
+    display: none;
+  }
+}

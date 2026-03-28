@@ -578,3 +578,96 @@ resumeButtons.forEach((btn) => {
     btn.setAttribute('href', RESUME_PATH);
   }
 });
+
+// ─── Visual Effects ─────────────────────────────────────────────────────────
+// All mouse-driven effects are gated behind prefers-reduced-motion.
+
+const motionOK = !prefersReducedMotion;
+const setRootProp = (k, v) => document.documentElement.style.setProperty(k, v);
+
+// 1. Cursor spotlight — updates --cursor-x / --cursor-y CSS vars used by body::after
+function handleSpotlight(e) {
+  setRootProp('--cursor-x', `${e.clientX}px`);
+  setRootProp('--cursor-y', `${e.clientY}px`);
+}
+
+// 2. Hero 3D tilt — tilts .hero__visual up to 8deg based on cursor position in hero section
+function handleHeroTilt(e) {
+  const hero = document.querySelector('.hero');
+  const visual = document.querySelector('.hero__visual');
+  if (!hero || !visual) return;
+  const rect = hero.getBoundingClientRect();
+  const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+  visual.style.transform = `perspective(1200px) rotateX(${-ny * 8}deg) rotateY(${nx * 8}deg)`;
+}
+
+function resetHeroTilt() {
+  const visual = document.querySelector('.hero__visual');
+  if (visual) visual.style.transform = '';
+}
+
+// 3. Magnetic buttons — translate toward cursor at 20% pull factor
+function initMagneticButtons() {
+  document.querySelectorAll('.btn--primary, .btn--ghost').forEach((btn) => {
+    btn.addEventListener('mouseenter', () => {
+      btn.style.transition = 'box-shadow 0.2s ease, background 0.3s ease';
+    });
+    btn.addEventListener('mousemove', (e) => {
+      const r = btn.getBoundingClientRect();
+      const ox = (e.clientX - r.left - r.width / 2) * 0.2;
+      const oy = (e.clientY - r.top - r.height / 2) * 0.2;
+      btn.style.transform = `translate(${ox}px, ${oy}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transition = 'transform 0.15s ease-out, box-shadow 0.2s ease, background 0.3s ease';
+      btn.style.transform = '';
+    });
+  });
+}
+
+// 4. Project card 3D depth tilt — tilts card up to 6deg + preserves translateY lift
+function initCardTilt() {
+  document.querySelectorAll('.project-card').forEach((card) => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transition = 'border-color 0.35s ease, box-shadow 0.35s ease';
+    });
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+      const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
+      card.style.transform = `perspective(800px) rotateX(${-ny * 6}deg) rotateY(${nx * 6}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.classList.add('project-card--resetting');
+      card.style.transition = '';
+      card.style.transform = '';
+      card.addEventListener('transitionend', () => {
+        card.classList.remove('project-card--resetting');
+      }, { once: true });
+    });
+  });
+}
+
+// ─── Register Effects ────────────────────────────────────────────────────────
+if (motionOK) {
+  window.addEventListener('mousemove', handleSpotlight, { passive: true });
+
+  const heroSection = document.querySelector('.hero');
+  heroSection?.addEventListener('mousemove', handleHeroTilt, { passive: true });
+  heroSection?.addEventListener('mouseleave', resetHeroTilt);
+
+  initMagneticButtons();
+
+  // Project cards are dynamically rendered — observe the grid for when they appear
+  const projectGrid = document.getElementById('projects-grid');
+  if (projectGrid) {
+    const gridObs = new MutationObserver((_, obs) => {
+      if (projectGrid.querySelector('.project-card')) {
+        initCardTilt();
+        obs.disconnect();
+      }
+    });
+    gridObs.observe(projectGrid, { childList: true });
+  }
+}
