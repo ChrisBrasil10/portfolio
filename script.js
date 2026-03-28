@@ -1,512 +1,383 @@
-const DATA_PATH = 'resume.json';
-const RESUME_PATH = 'assets/Chris__Resume.pdf';
-const TAGLINE = 'Software Engineer | Developing and Exploring Tech';
+// ════════════════════════════════════════════════════════════════
+// Chris Brasil — Portfolio Script
+// Single-page: resume.json + glass-data.json hydration
+// ════════════════════════════════════════════════════════════════
+
 let resumeData = null;
+let glassData = null;
 
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
-const particles = [];
-const particleCount = 70;
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const getParticleRGB = () =>
-  getComputedStyle(document.body).getPropertyValue('--particle-color-rgb').trim() || '0, 191, 166';
-let particleRGB = getParticleRGB();
+// ── Navigation ──────────────────────────────────────────────────
 
-const resizeCanvas = () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-};
+const nav = document.getElementById('site-nav');
+const hamburger = document.getElementById('nav-hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileLinks = document.querySelectorAll('[data-mobile-link]');
 
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+// Scroll state
+window.addEventListener('scroll', () => {
+  nav?.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
 
-class Particle {
-  constructor() {
-    this.reset(true);
-  }
+// Hamburger toggle
+let menuOpen = false;
+hamburger?.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  hamburger.classList.toggle('active', menuOpen);
+  mobileMenu?.classList.toggle('active', menuOpen);
+  document.body.style.overflow = menuOpen ? 'hidden' : '';
+});
 
-  reset(initial = false) {
-    this.x = Math.random() * canvas.width;
-    this.y = initial ? Math.random() * canvas.height : canvas.height + Math.random() * 100;
-    this.size = Math.random() * 1.2 + 0.2;
-    this.speedY = Math.random() * -0.25 - 0.05;
-    this.speedX = Math.random() * 0.3 - 0.15;
-    this.alpha = Math.random() * 0.6 + 0.25;
-  }
-
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-
-    if (this.y < -50) {
-      this.reset();
-    }
-  }
-
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${particleRGB}, ${this.alpha})`;
-    ctx.shadowColor = `rgba(${particleRGB}, 0.7)`;
-    ctx.shadowBlur = 8;
-    ctx.fill();
-  }
-}
-
-if (!prefersReducedMotion) {
-  for (let i = 0; i < particleCount; i += 1) {
-    particles.push(new Particle());
-  }
-
-  const animate = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((particle) => {
-      particle.update();
-      particle.draw();
-    });
-    requestAnimationFrame(animate);
-  };
-
-  animate();
-}
-
-// Smooth scroll for anchor links and scroll indicator
-const scrollTriggers = document.querySelectorAll('a[href^="#"], [data-scroll]');
-scrollTriggers.forEach((trigger) => {
-  trigger.addEventListener('click', (event) => {
-    const targetSelector = trigger.getAttribute('href')?.startsWith('#')
-      ? trigger.getAttribute('href')
-      : trigger.dataset.scroll;
-    if (!targetSelector) return;
-    const target = document.querySelector(targetSelector);
-    if (!target) return;
-    event.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth' });
+// Close mobile menu on link click
+mobileLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    menuOpen = false;
+    hamburger?.classList.remove('active');
+    mobileMenu?.classList.remove('active');
+    document.body.style.overflow = '';
   });
 });
 
-// Mobile navigation toggle
-const mobileToggle = document.getElementById('mobile-nav-toggle');
-const mobileOverlay = document.getElementById('mobile-nav-overlay');
-const mobileSheet = document.getElementById('mobile-nav-sheet');
-const mobileLinks = document.querySelectorAll('[data-mobile-nav-link]');
-let isMobileNavOpen = false;
-
-const setMobileNavState = (isOpen) => {
-  if (!mobileOverlay || !mobileSheet) return;
-  isMobileNavOpen = isOpen;
-  mobileOverlay.classList.toggle('active', isOpen);
-  mobileSheet.classList.toggle('active', isOpen);
-  mobileSheet.setAttribute('aria-hidden', String(!isOpen));
-  mobileOverlay.setAttribute('aria-hidden', String(!isOpen));
-};
-
-mobileToggle?.addEventListener('click', () => setMobileNavState(!isMobileNavOpen));
-mobileOverlay?.addEventListener('click', () => setMobileNavState(false));
-mobileLinks.forEach((link) =>
-  link.addEventListener('click', () => {
-    setMobileNavState(false);
-  })
-);
-
-window.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && isMobileNavOpen) {
-    setMobileNavState(false);
+// ESC to close
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && menuOpen) {
+    hamburger?.click();
   }
 });
 
-const siteHeader = document.querySelector('.site-header');
-const updateHeaderOnScroll = () => {
-  if (!siteHeader) return;
-  if (window.scrollY > 8) {
-    siteHeader.classList.add('scrolled');
-  } else {
-    siteHeader.classList.remove('scrolled');
-  }
-};
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', e => {
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
 
-updateHeaderOnScroll();
-window.addEventListener('scroll', updateHeaderOnScroll);
+// ── Scroll Animations ───────────────────────────────────────────
 
-// Fade-in observer reused after data renders
-const fadeObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
+const animObserver = new IntersectionObserver(
+  entries => entries.forEach(entry => {
+    if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      fadeObserver.unobserve(entry.target);
-    });
-  },
-  { threshold: 0.2 }
+      animObserver.unobserve(entry.target);
+    }
+  }),
+  { threshold: 0.15 }
 );
 
 const registerAnimations = () => {
-  document.querySelectorAll('[data-animate]').forEach((el) => {
-    if (!el.classList.contains('visible')) {
-      fadeObserver.observe(el);
-    }
+  document.querySelectorAll('[data-animate]').forEach(el => {
+    if (!el.classList.contains('visible')) animObserver.observe(el);
   });
 };
 
-// Render helpers -----------------------------------------------------------
+// ── Render: Hero & About ────────────────────────────────────────
 
 const renderHero = (data) => {
-  const heroName = document.getElementById('hero-name');
-  const heroTagline = document.getElementById('hero-tagline');
-  const heroSummary = document.getElementById('hero-summary');
-  const heroLinks = document.getElementById('hero-links');
-  const footerName = document.getElementById('hero-footer-name');
-
-  heroTagline.textContent = TAGLINE;
-  heroName.textContent = `Hi, I'm ${data.name}.`;
-
-  const primaryLocation = data.education?.[0]?.location || 'New York, NY';
-  const projectCount = data.projects?.length || 0;
-  const experienceCount = data.experience?.length || 0;
-  const experienceCopy = experienceCount
-    ? `${experienceCount} engineering experiences`
-    : 'multi-disciplinary experiences';
-  const projectCopy = projectCount ? `${projectCount} experiments` : 'countless experiments';
-  heroSummary.textContent = `Based in ${primaryLocation}, I'm looking to further my skillset as a software developer through personal projects while also looking for a fulltime position.`;
-
-  heroLinks.innerHTML = '';
-  const contactLinks = [
-    { label: 'GitHub', href: data.contact?.github },
-    { label: 'LinkedIn', href: data.contact?.linkedin },
-    { label: 'Email', href: data.contact?.email ? `mailto:${data.contact.email}` : null },
-  ].filter((link) => Boolean(link.href));
-
-  contactLinks.forEach((link) => {
-    const anchor = document.createElement('a');
-    anchor.href = link.href;
-    anchor.target = link.href.startsWith('http') ? '_blank' : '_self';
-    anchor.rel = link.href.startsWith('http') ? 'noopener' : '';
-    anchor.textContent = link.label;
-    heroLinks.appendChild(anchor);
-  });
-
-  if (footerName) {
-    footerName.textContent = data.name;
+  const tagline = document.getElementById('hero-tagline');
+  if (tagline) {
+    const loc = data.education?.[0]?.location || 'New York, NY';
+    tagline.textContent = `Based in ${loc}, I'm a software engineer building thoughtful products and exploring new technology through personal projects.`;
   }
-};
 
-const resolveRepoLink = (project = {}, repoMap = {}, contact = {}) => {
-  if (project.repo) return project.repo;
-  const identifiers = [project.id, project.slug, project.name].filter(Boolean);
-  for (const key of identifiers) {
-    if (repoMap && repoMap[key]) {
-      return repoMap[key];
-    }
+  const aboutText = document.getElementById('about-text');
+  if (aboutText) {
+    aboutText.textContent = `I'm looking to further my skillset as a software developer through personal projects while also looking for a fulltime position. With ${data.experience?.length || 'several'} engineering experiences across machine learning, clinical AI, and computer vision, I bring a hands-on approach to every project.`;
   }
-  return project.link || contact.github || '#';
+
+  const aboutLinks = document.getElementById('about-links');
+  if (aboutLinks) {
+    aboutLinks.innerHTML = '';
+    const links = [
+      { label: 'GitHub', href: data.contact?.github },
+      { label: 'LinkedIn', href: data.contact?.linkedin },
+      { label: 'Email', href: data.contact?.email ? `mailto:${data.contact.email}` : null },
+    ].filter(l => l.href);
+
+    links.forEach(l => {
+      const a = document.createElement('a');
+      a.href = l.href;
+      a.textContent = l.label;
+      a.target = l.href.startsWith('http') ? '_blank' : '_self';
+      a.rel = l.href.startsWith('http') ? 'noopener' : '';
+      aboutLinks.appendChild(a);
+    });
+  }
+
+  // Contact section links
+  const contactEmail = document.getElementById('contact-email');
+  const contactLinkedin = document.getElementById('contact-linkedin');
+  const contactGithub = document.getElementById('contact-github');
+  if (contactEmail && data.contact?.email) contactEmail.href = `mailto:${data.contact.email}`;
+  if (contactLinkedin && data.contact?.linkedin) contactLinkedin.href = data.contact.linkedin;
+  if (contactGithub && data.contact?.github) contactGithub.href = data.contact.github;
 };
 
-const renderProjects = (projects = [], contact = {}, repoMap = {}) => {
-  const grid = document.getElementById('projects-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
+// ── Render: Experience ──────────────────────────────────────────
 
-  projects.forEach((project) => {
-    const card = document.createElement('article');
-    card.className = 'project-card';
-    card.dataset.animate = 'fade';
-
-    const title = document.createElement('h3');
-    title.textContent = project.name;
-    
-    const metaText = [project.location].filter(Boolean).join('\n');
-    if (metaText) {
-      const meta = document.createElement('p');
-      meta.style.whiteSpace = 'pre-line';
-      meta.className = 'project-meta';
-      meta.textContent = metaText;
-      card.appendChild(meta);
-    }
-
-    const techStack = project.tech || [];
-    const descItems = project.description || [];
-
-    if (techStack.length) {
-      const techList = document.createElement('ul');
-      techList.className = 'project-card__stack';
-      techStack.forEach((tech) => {
-        const li = document.createElement('li');
-        li.textContent = tech;
-        techList.appendChild(li);
-      });
-      card.appendChild(techList);
-    }
-
-    if (descItems.length) {
-      const descList = document.createElement('ul');
-      descList.className = 'project-card__details';
-      descItems.forEach((line) => {
-        const li = document.createElement('li');
-        li.textContent = line;
-        descList.appendChild(li);
-      });
-      card.appendChild(descList);
-    }
-
-    const actions = document.createElement('div');
-    actions.className = 'project-card__actions';
-
-    const repoLink = resolveRepoLink(project, repoMap, contact);
-    if (repoLink && repoLink !== '#') {
-      const githubButton = document.createElement('a');
-      githubButton.className = 'btn btn--ghost';
-      githubButton.textContent = 'View on GitHub';
-      githubButton.href = repoLink;
-      githubButton.target = '_blank';
-      githubButton.rel = 'noopener noreferrer';
-      actions.appendChild(githubButton);
-    }
-
-    card.prepend(title);
-    card.append(actions);
-    grid.appendChild(card);
-
-  });
-};
-
-const renderExperience = (experienceRecords = []) => {
+const renderExperience = (records = []) => {
   const container = document.getElementById('experience-list');
   if (!container) return;
+  container.setAttribute('data-stagger', '');
   container.innerHTML = '';
 
-  const sortedExperience = [...experienceRecords].sort((a, b) => {
-    const orderA = parseInt(a.id, 10) || 0;
-    const orderB = parseInt(b.id, 10) || 0;
-    return orderA - orderB;
-  });
+  const sorted = [...records].sort((a, b) => parseInt(a.id) - parseInt(b.id));
 
-  sortedExperience.forEach((role, index) => {
-    const entry = document.createElement('article');
-    entry.className = 'experience-entry';
-    entry.dataset.animate = 'fade';
+  sorted.forEach((role, i) => {
+    const card = document.createElement('article');
+    card.className = 'exp-card';
+    card.dataset.animate = 'fade';
+    card.style.setProperty('--i', i);
 
-    const marker = document.createElement('div');
-    marker.className = 'experience-marker';
-    marker.textContent = String(index + 1).padStart(2, '0');
+    const initials = (role.company || '').split(' ').map(w => w[0]).join('').slice(0, 3);
 
-    const summaryCard = document.createElement('div');
-    summaryCard.className = 'experience-summary-card flex flex-col gap-4';
-    summaryCard.innerHTML = `
-      <div class="flex items-start gap-4">
-        <div class="experience-logo">
-          ${
-            role.logo
-              ? `<img src="${role.logo}" alt="${role.logoAlt || role.company}" class="w-12 h-12 object-contain" loading="lazy" />`
-              : `<span class="text-lg font-semibold tracking-[0.4em] text-white/80">${(role.company || '')
-                  .split(' ')
-                  .map((word) => word.charAt(0))
-                  .join('')
-                  .slice(0, 3)}</span>`
+    card.innerHTML = `
+      <div class="exp-card__header">
+        <div class="exp-card__logo">
+          ${role.logo
+            ? `<img src="${role.logo}" alt="${role.logoAlt || role.company}" loading="lazy" />`
+            : `<span style="font-size:1.1rem;font-weight:700;color:var(--text-light);letter-spacing:0.1em">${initials}</span>`
           }
         </div>
-        <div>
-          <p class="experience-summary-meta">${role.date || ''}</p>
-          <h3>${role.company || 'Experience'}</h3>
-          <p class="text-sm text-[var(--text-muted)]">${role.title || ''}</p>
+        <div class="exp-card__header-text">
+          <h3 class="exp-card__company">${role.company || ''}</h3>
+          <span class="exp-card__role">${role.title || ''}</span>
+          ${role.teamFocus ? `<span class="exp-card__team">${role.teamFocus}</span>` : ''}
+        </div>
+        <div class="exp-card__meta">
+          <span class="exp-card__date">${role.date || ''}</span>
+          <span class="exp-card__location">${role.location || ''}</span>
         </div>
       </div>
-      <p class="text-sm text-[var(--text-muted)]">${role.location || ''}</p>
-      ${
-        role.teamFocus
-          ? `<p class="text-xs uppercase tracking-[0.4em] text-[var(--text-muted)]">${role.teamFocus}</p>`
-          : ''
-      }
-      <p class="experience-description">${role.description || ''}</p>
+      <div class="exp-card__body">
+        <p class="exp-card__desc">${role.description || ''}</p>
+        ${role.highlights?.length ? `
+          <ul class="exp-card__highlights">
+            ${role.highlights.map(h => `<li>${h}</li>`).join('')}
+          </ul>
+        ` : ''}
+        ${role.tags?.length ? `
+          <div class="exp-card__tags">
+            ${role.tags.map(t => `<span class="exp-tag">${t}</span>`).join('')}
+          </div>
+        ` : ''}
+      </div>
     `;
-
-    const detailCard = document.createElement('div');
-    detailCard.className = 'experience-detail-card';
-
-    if (role.highlights && role.highlights.length > 0) {
-      const section = document.createElement('section');
-      section.innerHTML = '<h4>Highlights</h4>';
-      const list = document.createElement('ul');
-      list.className = 'experience-highlights';
-      role.highlights.forEach((item) => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        list.appendChild(li);
-      });
-      section.appendChild(list);
-      detailCard.appendChild(section);
-    }
-
-    if (role.tags && role.tags.length > 0) {
-      const tagsSection = document.createElement('section');
-      tagsSection.innerHTML = '<h4>Technologies</h4>';
-      const tagWrap = document.createElement('div');
-      tagWrap.className = 'experience-tags';
-      role.tags.forEach((tag) => {
-        const span = document.createElement('span');
-        span.className = 'experience-tag';
-        span.textContent = tag;
-        tagWrap.appendChild(span);
-      });
-      tagsSection.appendChild(tagWrap);
-      detailCard.appendChild(tagsSection);
-    }
-
-    entry.append(marker, summaryCard, detailCard);
-    container.appendChild(entry);
-  });
-};
-
-const renderEducation = (education = []) => {
-  const container = document.getElementById('education-cards');
-  if (!container) return;
-  container.innerHTML = '';
-
-  const createChip = (label, variant = 'default') => {
-    const span = document.createElement('span');
-    const variantClass = variant === 'accent' ? 'edu-chip--accent' : '';
-    span.className = `edu-chip ${variantClass} inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium`;
-    span.textContent = label;
-    return span;
-  };
-
-  education.forEach((entry) => {
-    const card = document.createElement('article');
-    card.dataset.animate = 'fade';
-    card.className =
-      'relative overflow-hidden rounded-3xl border shadow-2xl backdrop-blur-2xl p-8 md:p-10 flex flex-col gap-8';
-    card.style.background = 'var(--bg-panel-strong)';
-    card.style.borderColor = 'var(--divider-color)';
-
-    // GPA badge
-    const gpaBadge = document.createElement('div');
-    gpaBadge.className =
-      'absolute top-6 right-6 inline-flex items-center gap-2 rounded-full border px-4 py-1 text-xs font-semibold tracking-[0.35em]';
-    gpaBadge.style.borderColor = 'var(--divider-color)';
-    gpaBadge.style.background = 'var(--chip-bg-strong)';
-    gpaBadge.style.color = 'var(--text-primary)';
-    gpaBadge.innerHTML = `<span>GPA</span><span class="tracking-normal text-base font-semibold">${entry.gpa || '—'}</span>`;
-    card.appendChild(gpaBadge);
-
-    // Header with logo & degree info
-    const header = document.createElement('div');
-    header.className = 'flex flex-col gap-6 md:flex-row md:items-center md:justify-between';
-
-    const identity = document.createElement('div');
-    identity.className = 'flex items-center gap-4';
-
-    const logoWrap = document.createElement('div');
-    logoWrap.className =
-      'w-16 h-16 rounded-2xl border flex items-center justify-center overflow-hidden';
-    logoWrap.style.borderColor = 'var(--divider-color)';
-    logoWrap.style.background = 'var(--chip-bg)';
-
-    if (entry.logo) {
-      const img = document.createElement('img');
-      img.src = entry.logo;
-      img.alt = entry.logoAlt || `${entry.school || 'University'} logo`;
-      img.loading = 'lazy';
-      img.className = 'w-12 h-12 object-contain';
-      logoWrap.appendChild(img);
-    } else {
-      const initials = document.createElement('span');
-      initials.className = 'text-lg font-semibold tracking-[0.4em] text-white/80';
-      initials.textContent = (entry.school || '')
-        .split(' ')
-        .map((word) => word?.charAt(0) || '')
-        .join('')
-        .slice(0, 3);
-      logoWrap.appendChild(initials);
-    }
-
-    const schoolBlock = document.createElement('div');
-    const grad = document.createElement('p');
-    grad.className = 'text-xs uppercase tracking-[0.4em] text-[var(--text-muted)] mb-2';
-    grad.textContent = entry.expectedGraduation || '';
-
-    const schoolName = document.createElement('h3');
-    schoolName.className = 'text-2xl font-semibold text-[var(--text-primary)] leading-tight';
-    schoolName.textContent = entry.school;
-
-    const degree = document.createElement('p');
-    degree.className = 'text-sm text-[var(--text-muted)]';
-    degree.textContent = entry.minor
-      ? `${entry.degree}, Minor in ${entry.minor}`
-      : entry.degree || '';
-
-    const location = document.createElement('p');
-    location.className = 'text-sm text-[var(--text-muted)]';
-    location.textContent = entry.location || '';
-
-    schoolBlock.append(grad, schoolName, degree, location);
-    identity.append(logoWrap, schoolBlock);
-    header.appendChild(identity);
-    card.appendChild(header);
-
-    // Content sections stacked
-    const contentWrapper = document.createElement('div');
-    contentWrapper.className = 'space-y-6';
-
-    const courseworkSection = document.createElement('div');
-    const courseworkTitle = document.createElement('p');
-    courseworkTitle.className =
-      'text-xs uppercase tracking-[0.4em] text-[var(--text-muted)] mb-3';
-    courseworkTitle.textContent = 'Coursework';
-
-    const courseworkGrid = document.createElement('div');
-    courseworkGrid.className = 'grid gap-2 sm:grid-cols-2';
-
-    (entry.coursework || []).forEach((course) => {
-      courseworkGrid.appendChild(createChip(course));
-    });
-
-    if (!courseworkGrid.childElementCount) {
-      const fallback = document.createElement('p');
-      fallback.className = 'text-sm text-[var(--text-muted)]';
-      fallback.textContent = 'Coursework available on request.';
-      courseworkGrid.appendChild(fallback);
-    }
-
-    courseworkSection.append(courseworkTitle, courseworkGrid);
-
-    const organizationsSection = document.createElement('div');
-    const organizationsTitle = document.createElement('p');
-    organizationsTitle.className =
-      'text-xs uppercase tracking-[0.4em] text-[var(--text-muted)] mb-3';
-    organizationsTitle.textContent = 'Organizations';
-
-    const organizationsWrap = document.createElement('div');
-    organizationsWrap.className = 'flex flex-wrap gap-2';
-
-    const organizationsData =
-      (entry.organizations && entry.organizations.length > 0
-        ? entry.organizations
-        : (resumeData?.leadership || []).map((item) => item.organization)
-      ).filter(Boolean);
-
-    organizationsData.forEach((org) => {
-      organizationsWrap.appendChild(createChip(org, 'accent'));
-    });
-
-    if (!organizationsWrap.childElementCount) {
-      const fallback = document.createElement('p');
-      fallback.className = 'text-sm text-[var(--text-muted)]';
-      fallback.textContent = 'Active learner & collaborator.';
-      organizationsWrap.appendChild(fallback);
-    }
-
-    organizationsSection.append(organizationsTitle, organizationsWrap);
-
-    contentWrapper.append(courseworkSection, organizationsSection);
-    card.appendChild(contentWrapper);
-
     container.appendChild(card);
   });
 };
 
+// ── Render: Projects ────────────────────────────────────────────
+
+const renderProjects = (projects = [], contact = {}) => {
+  const grid = document.getElementById('projects-grid');
+  if (!grid) return;
+  grid.setAttribute('data-stagger', '');
+  grid.innerHTML = '';
+
+  projects.forEach((project, i) => {
+    const card = document.createElement('article');
+    card.className = 'proj-card';
+    card.dataset.animate = 'fade';
+    card.style.setProperty('--i', i);
+
+    const repo = project.repo || contact.github || '#';
+
+    card.innerHTML = `
+      ${project.location ? `<span class="proj-card__location">${project.location}</span>` : ''}
+      <h3 class="proj-card__name">${project.name}</h3>
+      ${project.tech?.length ? `
+        <div class="proj-card__stack">
+          ${project.tech.map(t => `<span>${t}</span>`).join('')}
+        </div>
+      ` : ''}
+      ${project.description?.length ? `
+        <ul class="proj-card__details">
+          ${project.description.map(d => `<li>${d}</li>`).join('')}
+        </ul>
+      ` : ''}
+      ${repo !== '#' ? `<a class="proj-card__link" href="${repo}" target="_blank" rel="noopener noreferrer">GitHub</a>` : ''}
+    `;
+    grid.appendChild(card);
+  });
+};
+
+// ── Render: GLASS ───────────────────────────────────────────────
+
+const renderGlass = (data) => {
+  const { program, journey, sdgs } = data;
+
+  // Intro
+  const intro = document.getElementById('glass-intro');
+  if (intro) {
+    intro.innerHTML = `
+      <p class="glass__intro-institution">${program.institution} · ${program.cohort}</p>
+      <blockquote class="glass__intro-mission">"${program.mission}"</blockquote>
+      <p class="glass__intro-description">${program.description}</p>
+    `;
+  }
+
+  // Stats
+  const statsEl = document.getElementById('glass-stats');
+  if (statsEl) {
+    statsEl.innerHTML = program.stats.map(s => `
+      <div class="glass-stat" data-animate="fade">
+        <span class="glass-stat__value">${s.value}</span>
+        <span class="glass-stat__label">${s.label}</span>
+      </div>
+    `).join('');
+  }
+
+  // Journey
+  const journeyEl = document.getElementById('glass-journey');
+  if (journeyEl) {
+    journeyEl.innerHTML = `
+      <h3 class="glass__journey-title">The Journey</h3>
+      ${journey.map(entry => {
+        const projectHTML = entry.project ? `
+          <div class="glass-entry__project">
+            <span class="glass-entry__project-name">${entry.project.name}</span>
+            <div class="glass-entry__project-tech">
+              ${entry.project.tech.map(t => `<span>${t}</span>`).join('')}
+            </div>
+            ${entry.project.repo ? `<a class="glass-entry__project-link" href="${entry.project.repo}" target="_blank" rel="noopener">View on GitHub →</a>` : ''}
+          </div>
+        ` : '';
+
+        const sdgChips = entry.sdgs?.length ? `
+          <div class="glass-entry__sdgs">
+            ${entry.sdgs.map(n => `<span class="glass-sdg-chip">SDG ${n}</span>`).join('')}
+            ${entry.upcoming ? `<span class="glass-sdg-chip" style="color:var(--accent-warm);border-color:rgba(212,118,74,0.2)">Upcoming</span>` : ''}
+          </div>
+        ` : '';
+
+        const imageHTML = entry.image ? `
+          <div class="glass-entry__image">
+            <img src="${entry.image}" alt="${entry.imageAlt || entry.title}" loading="lazy" />
+          </div>
+        ` : '';
+
+        return `
+          <article class="glass-entry${entry.upcoming ? ' glass-entry--upcoming' : ''}" data-animate="fade">
+            <div class="glass-entry__year">
+              ${entry.year}
+              ${entry.month ? `<span class="glass-entry__month">${entry.month}</span>` : ''}
+            </div>
+            <div class="glass-entry__body">
+              <div class="glass-entry__content">
+                <div class="glass-entry__text">
+                  <span class="glass-entry__category glass-entry__category--${entry.category}">${entry.categoryLabel}</span>
+                  <h4 class="glass-entry__title">${entry.title}</h4>
+                  <span class="glass-entry__location">${entry.location}</span>
+                  <p class="glass-entry__desc">${entry.description}</p>
+                  ${projectHTML}
+                  ${sdgChips}
+                </div>
+                ${imageHTML}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('')}
+    `;
+  }
+
+  // SDGs
+  const sdgsEl = document.getElementById('glass-sdgs');
+  if (sdgsEl) {
+    sdgsEl.innerHTML = `
+      <h3 class="glass__sdgs-title">Impact Areas</h3>
+      <div class="glass__sdgs-grid">
+        ${sdgs.map(sdg => {
+          const count = journey.filter(e => e.sdgs?.includes(sdg.number) && !e.upcoming).length;
+          return `
+            <div class="glass-sdg-card" style="--sdg-color:${sdg.color}" data-animate="fade">
+              <span class="glass-sdg-card__number">${sdg.number}</span>
+              <div class="glass-sdg-card__content">
+                <p class="glass-sdg-card__name">${sdg.name}</p>
+                <p class="glass-sdg-card__desc">${sdg.description}</p>
+                <p class="glass-sdg-card__count">${count} experience${count !== 1 ? 's' : ''}</p>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+};
+
+// ── Render: Education ───────────────────────────────────────────
+
+const renderEducation = (education = []) => {
+  const container = document.getElementById('education-content');
+  if (!container) return;
+  container.innerHTML = '';
+
+  education.forEach(entry => {
+    const card = document.createElement('article');
+    card.className = 'edu-card';
+    card.dataset.animate = 'fade';
+
+    const orgs = (entry.organizations?.length
+      ? entry.organizations
+      : (resumeData?.leadership || []).map(l => l.organization)
+    ).filter(Boolean);
+
+    const gpaVal = (entry.gpa || '—').split('/')[0].trim();
+
+    card.innerHTML = `
+      <div class="edu-card__main">
+        <div class="edu-card__top">
+          <div class="edu-card__logo">
+            ${entry.logo
+              ? `<img src="${entry.logo}" alt="${entry.logoAlt || entry.school}" loading="lazy" />`
+              : `<span style="font-weight:700;color:var(--text-light)">${(entry.school||'').split(' ').map(w=>w[0]).join('').slice(0,3)}</span>`
+            }
+          </div>
+          <div class="edu-card__info">
+            <h3>${entry.school}</h3>
+            <p>${entry.minor ? `${entry.degree}, Minor in ${entry.minor}` : entry.degree || ''}</p>
+          </div>
+        </div>
+        <div class="edu-card__meta">
+          <div class="edu-card__meta-item">
+            <span class="edu-card__meta-label">Expected</span>
+            <span class="edu-card__meta-value">${entry.expectedGraduation || ''}</span>
+          </div>
+          <div class="edu-card__meta-item">
+            <span class="edu-card__meta-label">GPA</span>
+            <span class="edu-card__meta-value">${gpaVal}</span>
+          </div>
+          <div class="edu-card__meta-item">
+            <span class="edu-card__meta-label">Location</span>
+            <span class="edu-card__meta-value">${entry.location || ''}</span>
+          </div>
+        </div>
+        <div>
+          <p class="edu-card__coursework-label">Coursework</p>
+          <div class="edu-card__chips">
+            ${(entry.coursework || []).map(c => `<span class="edu-chip">${c}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="edu-card__sidebar">
+        <p class="edu-card__sidebar-title">Organizations</p>
+        ${orgs.map(o => `<div class="edu-org-item">${o}</div>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+};
+
+// ── Render: Skills ──────────────────────────────────────────────
+
 const renderSkills = (skills = {}) => {
-  const groups = document.getElementById('skills-groups');
-  if (!groups) return;
-  groups.innerHTML = '';
+  const container = document.getElementById('skills-groups');
+  if (!container) return;
+  container.setAttribute('data-stagger', '');
+  container.innerHTML = '';
 
   const mapping = [
     { key: 'languages', label: 'Languages' },
@@ -514,160 +385,49 @@ const renderSkills = (skills = {}) => {
     { key: 'spokenLanguages', label: 'Spoken Languages' },
   ];
 
-  mapping.forEach(({ key, label }) => {
-    if (!Array.isArray(skills[key]) || skills[key].length === 0) return;
+  mapping.forEach(({ key, label }, i) => {
+    if (!Array.isArray(skills[key]) || !skills[key].length) return;
     const group = document.createElement('div');
     group.className = 'skill-group';
     group.dataset.animate = 'fade';
+    group.style.setProperty('--i', i);
 
-    const heading = document.createElement('h3');
-    heading.textContent = label;
-
-    const tags = document.createElement('div');
-    tags.className = 'skill-tags';
-
-    skills[key].forEach((skill) => {
-      const tag = document.createElement('span');
-      tag.className = 'skill-tag';
-      tag.textContent = skill;
-      tags.appendChild(tag);
-    });
-
-    group.append(heading, tags);
-    groups.appendChild(group);
+    group.innerHTML = `
+      <h3 class="skill-group__title">${label}</h3>
+      <div class="skill-group__tags">
+        ${skills[key].map(s => `<span class="skill-tag">${s}</span>`).join('')}
+      </div>
+    `;
+    container.appendChild(group);
   });
 };
 
-// Fetch + render resume.json driven content -------------------------------
+// ── Hydrate ─────────────────────────────────────────────────────
 
-/**
- * Updating resume.json automatically updates every section.
- * Add/remove entries from projects, experience, education, or skills arrays
- * and the UI will reflect the new content on the next page load.
- */
-const hydrateSite = async () => {
+const hydrate = async () => {
   try {
-    const response = await fetch(DATA_PATH);
-    const data = await response.json();
-    resumeData = data;
-    window.cbData = data; // expose for debugging
+    const [resumeRes, glassRes] = await Promise.all([
+      fetch('resume.json'),
+      fetch('glass-data.json')
+    ]);
+    resumeData = await resumeRes.json();
+    glassData = await glassRes.json();
 
-    renderHero(data);
-    renderProjects(data.projects, data.contact, data.githubRepos || {});
-    renderExperience(data.experience);
-    renderEducation(data.education);
-    renderSkills(data.skills);
+    renderHero(resumeData);
+    renderExperience(resumeData.experience);
+    renderProjects(resumeData.projects, resumeData.contact);
+    renderGlass(glassData);
+    renderEducation(resumeData.education);
+    renderSkills(resumeData.skills);
 
     registerAnimations();
-  } catch (error) {
-    console.error('Unable to load resume.json', error);
+  } catch (err) {
+    console.error('Failed to load data:', err);
   }
 };
 
-hydrateSite();
+hydrate();
 
-// Footer year + resume link fallback
-const yearTarget = document.getElementById('current-year');
-if (yearTarget) {
-  yearTarget.textContent = new Date().getFullYear();
-}
-
-const resumeButtons = document.querySelectorAll('#resume a.btn');
-resumeButtons.forEach((btn) => {
-  if (!btn.getAttribute('href')) {
-    btn.setAttribute('href', RESUME_PATH);
-  }
-});
-
-// ─── Visual Effects ─────────────────────────────────────────────────────────
-// All mouse-driven effects are gated behind prefers-reduced-motion.
-
-const motionOK = !prefersReducedMotion;
-const setRootProp = (k, v) => document.documentElement.style.setProperty(k, v);
-
-// 1. Cursor spotlight — updates --cursor-x / --cursor-y CSS vars used by body::after
-function handleSpotlight(e) {
-  setRootProp('--cursor-x', `${e.clientX}px`);
-  setRootProp('--cursor-y', `${e.clientY}px`);
-}
-
-// 2. Hero 3D tilt — tilts .hero__visual up to 8deg based on cursor position in hero section
-function handleHeroTilt(e) {
-  const hero = document.querySelector('.hero');
-  const visual = document.querySelector('.hero__visual');
-  if (!hero || !visual) return;
-  const rect = hero.getBoundingClientRect();
-  const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-  const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-  visual.style.transform = `perspective(1200px) rotateX(${-ny * 8}deg) rotateY(${nx * 8}deg)`;
-}
-
-function resetHeroTilt() {
-  const visual = document.querySelector('.hero__visual');
-  if (visual) visual.style.transform = '';
-}
-
-// 3. Magnetic buttons — translate toward cursor at 20% pull factor
-function initMagneticButtons() {
-  document.querySelectorAll('.btn--primary, .btn--ghost').forEach((btn) => {
-    btn.addEventListener('mouseenter', () => {
-      btn.style.transition = 'box-shadow 0.2s ease, background 0.3s ease';
-    });
-    btn.addEventListener('mousemove', (e) => {
-      const r = btn.getBoundingClientRect();
-      const ox = (e.clientX - r.left - r.width / 2) * 0.2;
-      const oy = (e.clientY - r.top - r.height / 2) * 0.2;
-      btn.style.transform = `translate(${ox}px, ${oy}px)`;
-    });
-    btn.addEventListener('mouseleave', () => {
-      btn.style.transition = 'transform 0.15s ease-out, box-shadow 0.2s ease, background 0.3s ease';
-      btn.style.transform = '';
-    });
-  });
-}
-
-// 4. Project card 3D depth tilt — tilts card up to 6deg + preserves translateY lift
-function initCardTilt() {
-  document.querySelectorAll('.project-card').forEach((card) => {
-    card.addEventListener('mouseenter', () => {
-      card.style.transition = 'border-color 0.35s ease, box-shadow 0.35s ease';
-    });
-    card.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
-      const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
-      card.style.transform = `perspective(800px) rotateX(${-ny * 6}deg) rotateY(${nx * 6}deg) translateY(-6px)`;
-    });
-    card.addEventListener('mouseleave', () => {
-      card.classList.add('project-card--resetting');
-      card.style.transition = '';
-      card.style.transform = '';
-      card.addEventListener('transitionend', () => {
-        card.classList.remove('project-card--resetting');
-      }, { once: true });
-    });
-  });
-}
-
-// ─── Register Effects ────────────────────────────────────────────────────────
-if (motionOK) {
-  window.addEventListener('mousemove', handleSpotlight, { passive: true });
-
-  const heroSection = document.querySelector('.hero');
-  heroSection?.addEventListener('mousemove', handleHeroTilt, { passive: true });
-  heroSection?.addEventListener('mouseleave', resetHeroTilt);
-
-  initMagneticButtons();
-
-  // Project cards are dynamically rendered — observe the grid for when they appear
-  const projectGrid = document.getElementById('projects-grid');
-  if (projectGrid) {
-    const gridObs = new MutationObserver((_, obs) => {
-      if (projectGrid.querySelector('.project-card')) {
-        initCardTilt();
-        obs.disconnect();
-      }
-    });
-    gridObs.observe(projectGrid, { childList: true });
-  }
-}
+// Footer year
+const yearEl = document.getElementById('current-year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
