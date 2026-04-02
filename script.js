@@ -230,6 +230,15 @@ const renderGlass = (data) => {
     `).join('');
   }
 
+  // Abstract
+  const abstractEl = document.getElementById('glass-abstract');
+  if (abstractEl && program.abstract) {
+    abstractEl.innerHTML = `
+      <p class="glass__abstract-label">Research Abstract</p>
+      <div class="glass__abstract-text" data-animate="fade">${program.abstract.split('\n\n').map(p => `<p>${p}</p>`).join('')}</div>
+    `;
+  }
+
   // Journey
   const journeyEl = document.getElementById('glass-journey');
   if (journeyEl) {
@@ -305,6 +314,43 @@ const renderGlass = (data) => {
         }).join('')}
       </div>
     `;
+  }
+
+  // Paper
+  const paperEl = document.getElementById('glass-paper');
+  if (paperEl && program.paperPath) {
+    paperEl.innerHTML = `
+      <p class="glass__paper-label">Capstone Research Paper</p>
+      <div class="glass__paper-teaser" data-animate="fade">
+        <div class="glass__paper-teaser-text">
+          <h3 class="glass__paper-title">Final Paper</h3>
+          <p class="glass__paper-teaser-desc">Read the full capstone paper exploring how AI can be engineered to advance global educational equity.</p>
+        </div>
+        <div class="glass__paper-teaser-actions">
+          <button class="glass__paper-toggle" aria-expanded="false">Read Paper</button>
+          <a class="glass__paper-download" href="${program.paperPath}" target="_blank" rel="noopener">Download PDF →</a>
+        </div>
+      </div>
+      <div class="glass__paper-viewer" hidden>
+        <iframe class="glass__paper-frame" title="GLASS Capstone Research Paper"></iframe>
+      </div>
+    `;
+
+    const btn = paperEl.querySelector('.glass__paper-toggle');
+    const viewer = paperEl.querySelector('.glass__paper-viewer');
+    const frame = paperEl.querySelector('.glass__paper-frame');
+    let loaded = false;
+
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      if (!isOpen && !loaded) {
+        frame.src = program.paperPath;
+        loaded = true;
+      }
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      btn.textContent = isOpen ? 'Read Paper' : 'Close Paper';
+      viewer.hidden = isOpen;
+    });
   }
 };
 

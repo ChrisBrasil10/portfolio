@@ -976,6 +976,139 @@ main {
   margin-top: 0.4rem;
 }
 
+/* ── GLASS Abstract ───────────────────────────────────── */
+
+.glass__abstract {
+  max-width: 720px;
+  margin-bottom: 4rem;
+}
+
+.glass__abstract-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.glass__abstract-text {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.25rem;
+}
+
+.glass__abstract-text p {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.glass__abstract-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── GLASS Paper ──────────────────────────────────────── */
+
+.glass__paper {
+  margin-bottom: 2rem;
+}
+
+.glass__paper-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.glass__paper-teaser {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.75rem 2rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.glass__paper-teaser-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.glass__paper-title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.4rem;
+  color: var(--text);
+  margin: 0;
+}
+
+.glass__paper-teaser-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  max-width: 480px;
+  margin: 0;
+}
+
+.glass__paper-teaser-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-shrink: 0;
+}
+
+.glass__paper-toggle {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.glass__paper-toggle:hover {
+  background: var(--accent-light);
+  transform: translateY(-1px);
+}
+
+.glass__paper-download {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.glass__paper-download:hover {
+  text-decoration: underline;
+}
+
+.glass__paper-viewer {
+  margin-top: 1rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.glass__paper-frame {
+  width: 100%;
+  height: 640px;
+  border: none;
+  display: block;
+  background: var(--bg);
+}
+
 /* ── Education ────────────────────────────────────────── */
 
 .edu-card {
@@ -1295,6 +1428,15 @@ main {
     grid-template-columns: 1fr;
   }
 
+  .glass__paper-teaser {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .glass__paper-frame {
+    height: 480px;
+  }
+
   .edu-card {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -1344,6 +1486,10 @@ main {
 
   .glass__stats {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .glass__paper-frame {
+    height: 360px;
   }
 
   .section--glass {
