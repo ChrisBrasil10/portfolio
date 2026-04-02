@@ -12,9 +12,9 @@
     "paperPath": "assets/glass-paper.pdf",
     "stats": [
       { "value": "3", "label": "Years" },
-      { "value": "25", "label": "Scholars" },
+      { "value": "19", "label": "Scholars" },
       { "value": "4", "label": "Continents" },
-      { "value": "2+", "label": "UN SDGs addressed" }
+      { "value": "4+", "label": "UN SDGs addressed" }
     ]
   },
   "sdgs": [
@@ -46,20 +46,34 @@
     },
     {
       "id": "02",
-      "year": "2024",
-      "month": "January",
-      "category": "service",
-      "categoryLabel": "Service & Leadership",
-      "title": "ADRA Beach Cleanup",
-      "location": "Rio de Janeiro, Brazil",
-      "description": "Volunteered with ADRA during J-term 2024 for an environmental cleanup initiative on Rio's beaches. Brought an engineering perspective to understand waste management challenges and coastal ecosystem preservation in a developing urban context.",
-      "sdgs": [13],
-      "image": "assets/adrabeachcleanup.jpg",
-      "imageAlt": "ADRA beach cleanup volunteer in Rio de Janeiro",
+      "year": "2023",
+      "month": "Fall",
+      "category": "professional",
+      "categoryLabel": "Professional Development",
+      "title": "SHPE National Conference",
+      "location": "Salt Lake City, UT",
+      "description": "Attended the Society of Hispanic Professional Engineers National Conference. Connected with engineers across industries including aerospace, tech, and consumer electronics. Secured the Whirlpool ML internship through relationships built at the event — a direct example of the professional development GLASS cultivates.",
+      "sdgs": [],
+      "image": "assets/shpe.jpg",
+      "imageAlt": "Chris at SHPE National Conference",
       "type": "experience"
     },
     {
       "id": "03",
+      "year": "2023",
+      "month": "Fall",
+      "category": "academic",
+      "categoryLabel": "Academic Excellence",
+      "title": "NYU × Amazon Mini Hackathon",
+      "location": "New York, NY",
+      "description": "Built an Amazon Alexa skill for automated coding interview moderation as part of the NYU × Amazon hackathon. The skill guided candidates through structured technical questions with real-time feedback, demonstrating the intersection of voice AI and software engineering education.",
+      "sdgs": [4],
+      "image": "assets/amazonimage.png",
+      "imageAlt": "NYU x Amazon Mini Hackathon",
+      "type": "experience"
+    },
+    {
+      "id": "04",
       "year": "2024",
       "month": "Spring",
       "category": "global",
@@ -75,25 +89,6 @@
       "sdgs": [4, 13],
       "image": "assets/studyawayabudhabi.jpg",
       "imageAlt": "Chris and friends in the Abu Dhabi desert",
-      "type": "experience"
-    },
-    {
-      "id": "04",
-      "year": "2024",
-      "month": "Spring",
-      "category": "global",
-      "categoryLabel": "Global Competency",
-      "title": "VinUniversity — Agent-Based Urban Modeling",
-      "location": "Hanoi, Vietnam",
-      "description": "Participated in a project-based engineering program at VinUniversity (Cornell/UPenn collaboration). Collaborated with Vietnamese and international students to design urban road systems using agent-based modeling. Studied sustainable urban planning under Professor Nguyen Ngoc Doanh. Rapid Ride won first place for best pitch and program at VinUniversity's competition.",
-      "project": {
-        "name": "Rapid Ride",
-        "tech": ["GAML", "SQL", "Agent-Based Modeling"],
-        "repo": "https://github.com/ChrisBrasil10/Rapid-Ride"
-      },
-      "sdgs": [13],
-      "image": "assets/vinuniversity.png",
-      "imageAlt": "Chris receiving certificate at VinUniversity",
       "type": "experience"
     },
     {
@@ -113,15 +108,20 @@
     {
       "id": "06",
       "year": "2024",
-      "month": "Fall",
-      "category": "professional",
-      "categoryLabel": "Professional Development",
-      "title": "SHPE National Conference",
-      "location": "Salt Lake City, UT",
-      "description": "Attended the Society of Hispanic Professional Engineers National Conference. Connected with engineers across industries including aerospace, tech, and consumer electronics. Secured the Whirlpool ML internship through relationships built at the event — a direct example of the professional development GLASS cultivates.",
-      "sdgs": [],
-      "image": "assets/shpe.jpg",
-      "imageAlt": "Chris at SHPE National Conference",
+      "month": "Summer",
+      "category": "global",
+      "categoryLabel": "Global Competency",
+      "title": "VinUniversity — Agent-Based Urban Modeling",
+      "location": "Hanoi, Vietnam",
+      "description": "Participated in a project-based engineering program at VinUniversity (Cornell/UPenn collaboration). Collaborated with Vietnamese and international students to design urban road systems using agent-based modeling. Studied sustainable urban planning under Professor Nguyen Ngoc Doanh. Rapid Ride won first place for best pitch and program at VinUniversity's competition.",
+      "project": {
+        "name": "Rapid Ride",
+        "tech": ["GAML", "SQL", "Agent-Based Modeling"],
+        "repo": "https://github.com/ChrisBrasil10/Rapid-Ride"
+      },
+      "sdgs": [13],
+      "image": "assets/vinuniversity.png",
+      "imageAlt": "Chris receiving certificate at VinUniversity",
       "type": "experience"
     },
     {
@@ -140,16 +140,16 @@
     },
     {
       "id": "08",
-      "year": "2024",
-      "month": "Fall",
-      "category": "academic",
-      "categoryLabel": "Academic Excellence",
-      "title": "NYU × Amazon Mini Hackathon",
-      "location": "New York, NY",
-      "description": "Built an Amazon Alexa skill for automated coding interview moderation as part of the NYU × Amazon hackathon. The skill guided candidates through structured technical questions with real-time feedback, demonstrating the intersection of voice AI and software engineering education.",
-      "sdgs": [4],
-      "image": "assets/amazonimage.png",
-      "imageAlt": "NYU x Amazon Mini Hackathon",
+      "year": "2025",
+      "month": "January",
+      "category": "service",
+      "categoryLabel": "Service & Leadership",
+      "title": "ADRA Beach Cleanup",
+      "location": "Rio de Janeiro, Brazil",
+      "description": "Volunteered with ADRA during J-term 2025 for an environmental cleanup initiative on Rio's beaches. Brought an engineering perspective to understand waste management challenges and coastal ecosystem preservation in a developing urban context.",
+      "sdgs": [13],
+      "image": "assets/adrabeachcleanup.jpg",
+      "imageAlt": "ADRA beach cleanup volunteer in Rio de Janeiro",
       "type": "experience"
     },
     {
@@ -162,8 +162,7 @@
       "location": "New York, NY",
       "description": "The culminating GLASS project: a research paper and public poster presentation synthesizing the full three-year journey. Will connect engineering work across Abu Dhabi, Vietnam, Rio de Janeiro, and New York to at least two UN SDGs, demonstrating globally competent and socially responsible engineering practice.",
       "sdgs": [4, 13],
-      "type": "milestone",
-      "upcoming": true
+      "type": "milestone"
     }
   ]
 }
