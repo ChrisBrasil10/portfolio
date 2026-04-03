@@ -1217,6 +1217,7 @@ main {
 /* ── GLASS Paper ──────────────────────────────────────── */
 
 .glass__paper {
+  margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
