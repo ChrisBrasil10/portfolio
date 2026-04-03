@@ -545,20 +545,30 @@ document.querySelectorAll('.map-marker').forEach(marker => {
     if (mapTitleEl)    mapTitleEl.textContent    = 'Worldwide.';
   });
 
-  // Click: open detail drawer
+  // Click: toggle detail drawer
   marker.addEventListener('click', () => {
+    const isOpen = drawer.classList.contains('open');
+    const isSame = drawer.dataset.active === marker.dataset.project;
+
+    if (isOpen && isSame) {
+      drawer.classList.remove('open');
+      drawer.dataset.active = '';
+      return;
+    }
+
     const { project, location, tech, desc, repo } = marker.dataset;
 
     document.getElementById('drawer-location').textContent = location;
     document.getElementById('drawer-name').textContent     = project;
     document.getElementById('drawer-link').href            = repo;
 
-    const techEl = document.getElementById('drawer-tech');
-    techEl.innerHTML = tech.split('|').map(t => `<span>${t}</span>`).join('');
+    document.getElementById('drawer-tech').innerHTML =
+      tech.split('|').map(t => `<span>${t}</span>`).join('');
 
-    const descEl = document.getElementById('drawer-desc');
-    descEl.innerHTML = desc.split('|').map(d => `<li>${d}</li>`).join('');
+    document.getElementById('drawer-desc').innerHTML =
+      desc.split('|').map(d => `<li>${d}</li>`).join('');
 
+    drawer.dataset.active = project;
     drawer.classList.add('open');
   });
 });
