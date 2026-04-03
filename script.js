@@ -78,7 +78,7 @@ const registerAnimations = () => {
 const renderHero = (data) => {
   const tagline = document.getElementById('hero-tagline');
   if (tagline) {
-    const loc = data.education?.[0]?.location || 'New York, NY';
+    const loc = data.education?.[0]?.location || 'New York City';
     tagline.textContent = `Based in ${loc}, I'm a software engineer building thoughtful products and exploring new technology through personal projects.`;
   }
 
