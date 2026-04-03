@@ -132,7 +132,6 @@ const startTyping = () => {
   const strings = [
     'A Software Engineer',
     'A Full Stack Developer',
-    'A Machine Learning Engineer',
     'A Global Scholar',
     'A Problem Solver',
     'An NYU Engineer',
@@ -527,6 +526,22 @@ const hydrate = async () => {
 
 hydrate();
 startTyping();
+
+// ── Projects map hover ──────────────────────────────────────────
+
+const mapLocationEl = document.getElementById('map-location');
+const mapTitleEl    = document.getElementById('map-title');
+
+document.querySelectorAll('.map-marker').forEach(marker => {
+  marker.addEventListener('mouseenter', () => {
+    if (mapLocationEl) mapLocationEl.textContent = marker.dataset.location;
+    if (mapTitleEl)    mapTitleEl.textContent    = marker.dataset.project;
+  });
+  marker.addEventListener('mouseleave', () => {
+    if (mapLocationEl) mapLocationEl.textContent = 'My Projects';
+    if (mapTitleEl)    mapTitleEl.textContent    = 'Worldwide.';
+  });
+});
 
 // Footer year
 const yearEl = document.getElementById('current-year');

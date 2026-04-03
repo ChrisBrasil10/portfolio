@@ -104,7 +104,37 @@
           <span class="section__number">03</span>
           <h2 class="section__title">Projects</h2>
         </div>
-        <div class="projects__grid" id="projects-grid"></div>
+        <div class="projects__map">
+          <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" class="projects__svg">
+            <image href="assets/map.svg" width="1000" height="500"/>
+
+            <!-- ChessBot — New York, NY -->
+            <g class="map-marker" data-project="ChessBot" data-location="New York, NY"
+               onclick="window.open('https://github.com/ChrisBrasil10/ChessBot','_blank')">
+              <circle class="map-dot" cx="305" cy="185" r="10" fill="#3EA8ED"/>
+              <text class="map-label" x="305" y="185" text-anchor="middle" dy="0.35em">ChessBot</text>
+            </g>
+
+            <!-- Rapid Ride — Hanoi, Vietnam -->
+            <g class="map-marker" data-project="Rapid Ride" data-location="Hanoi, Vietnam"
+               onclick="window.open('https://github.com/ChrisBrasil10/Rapid-Ride','_blank')">
+              <circle class="map-dot" cx="800" cy="244" r="10" fill="#FF9F0A"/>
+              <text class="map-label" x="800" y="244" text-anchor="middle" dy="0.35em">Rapid Ride</text>
+            </g>
+
+            <!-- Health Reflect — Abu Dhabi, UAE -->
+            <g class="map-marker" data-project="Health Reflect" data-location="Abu Dhabi, UAE"
+               onclick="window.open('https://github.com/ChrisBrasil10/Health-Reflect','_blank')">
+              <circle class="map-dot" cx="658" cy="235" r="10" fill="#09CF75"/>
+              <text class="map-label" x="658" y="235" text-anchor="middle" dy="0.35em">Health Reflect</text>
+            </g>
+          </svg>
+
+          <div class="projects__map-info">
+            <div class="projects__map-location" id="map-location">My Projects</div>
+            <div class="projects__map-title" id="map-title">Worldwide.</div>
+          </div>
+        </div>
       </section>
 
       <!-- GLASS Honors -->
