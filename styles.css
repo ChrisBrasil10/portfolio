@@ -1721,6 +1721,42 @@ main {
     font-size: clamp(3.5rem, 14vw, 5rem);
   }
 
+  .projects__map {
+    height: 420px;
+  }
+
+  .project-drawer {
+    padding: 1rem 1.1rem 1.25rem;
+    max-height: 55%;
+    overflow-y: auto;
+  }
+
+  .project-drawer__close {
+    top: 0.75rem;
+    right: 0.9rem;
+  }
+
+  .project-drawer__body {
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .project-drawer__name {
+    font-size: 1.3rem;
+  }
+
+  .project-drawer__desc li {
+    font-size: 0.8rem;
+  }
+
+  .project-drawer__right {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+  }
+
   .glass__stats {
     grid-template-columns: repeat(2, 1fr);
   }
