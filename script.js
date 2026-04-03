@@ -172,52 +172,48 @@ const startTyping = () => {
 const renderExperience = (records = []) => {
   const container = document.getElementById('experience-list');
   if (!container) return;
-  container.setAttribute('data-stagger', '');
   container.innerHTML = '';
 
   const sorted = [...records].sort((a, b) => parseInt(a.id) - parseInt(b.id));
 
   sorted.forEach((role, i) => {
-    const card = document.createElement('article');
-    card.className = 'exp-card';
-    card.dataset.animate = 'fade';
-    card.style.setProperty('--i', i);
+    const entry = document.createElement('div');
+    entry.className = 'exp-entry';
+    entry.dataset.animate = 'fade';
+    entry.style.setProperty('--i', i);
 
     const initials = (role.company || '').split(' ').map(w => w[0]).join('').slice(0, 3);
 
-    card.innerHTML = `
-      <div class="exp-card__header">
-        <div class="exp-card__logo">
+    entry.innerHTML = `
+      <div class="exp-entry__dot"></div>
+      <div class="exp-entry__company-row">
+        <div class="exp-entry__logo">
           ${role.logo
             ? `<img src="${role.logo}" alt="${role.logoAlt || role.company}" loading="lazy" />`
-            : `<span style="font-size:1.1rem;font-weight:700;color:var(--text-light);letter-spacing:0.1em">${initials}</span>`
+            : `<span class="exp-entry__initials">${initials}</span>`
           }
         </div>
-        <div class="exp-card__header-text">
-          <h3 class="exp-card__company">${role.company || ''}</h3>
-          <span class="exp-card__role">${role.title || ''}</span>
-          ${role.teamFocus ? `<span class="exp-card__team">${role.teamFocus}</span>` : ''}
-        </div>
-        <div class="exp-card__meta">
-          <span class="exp-card__date">${role.date || ''}</span>
-          <span class="exp-card__location">${role.location || ''}</span>
-        </div>
+        <span class="exp-entry__company">${role.company || ''}</span>
+        <span class="exp-entry__location">(${role.location || ''})</span>
       </div>
-      <div class="exp-card__body">
-        <p class="exp-card__desc">${role.description || ''}</p>
-        ${role.highlights?.length ? `
-          <ul class="exp-card__highlights">
-            ${role.highlights.map(h => `<li>${h}</li>`).join('')}
-          </ul>
-        ` : ''}
-        ${role.tags?.length ? `
-          <div class="exp-card__tags">
-            ${role.tags.map(t => `<span class="exp-tag">${t}</span>`).join('')}
-          </div>
-        ` : ''}
+      <h3 class="exp-entry__title">${role.title || ''}</h3>
+      <div class="exp-entry__meta">
+        ${role.teamFocus ? `<span class="exp-entry__team">${role.teamFocus}</span>` : ''}
+        <span class="exp-entry__date">${role.date || ''}</span>
       </div>
+      <p class="exp-entry__desc">${role.description || ''}</p>
+      ${role.highlights?.length ? `
+        <ul class="exp-entry__highlights">
+          ${role.highlights.map(h => `<li>${h}</li>`).join('')}
+        </ul>
+      ` : ''}
+      ${role.tags?.length ? `
+        <div class="exp-entry__tags">
+          ${role.tags.map(t => `<span class="exp-tag">${t}</span>`).join('')}
+        </div>
+      ` : ''}
     `;
-    container.appendChild(card);
+    container.appendChild(entry);
   });
 };
 
