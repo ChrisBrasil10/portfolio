@@ -84,7 +84,7 @@ const renderHero = (data) => {
 
   const aboutText = document.getElementById('about-text');
   if (aboutText) {
-    aboutText.textContent = `I'm looking to further my skillset as a software developer through personal projects while also looking for a fulltime position. With ${data.experience?.length || 'several'} engineering experiences across machine learning, clinical AI, and computer vision, I bring a hands-on approach to every project.`;
+    aboutText.textContent = `I'm a software engineering student at NYU Tandon School of Engineering graduating in May 2026, with ${data.experience?.length || 3} internship experiences across machine learning, clinical AI, and computer vision. As a GLASS Honors Scholar, I've worked on global projects in Abu Dhabi, Vietnam, and Brazil — connecting engineering to the UN Sustainable Development Goals. I'm passionate about building thoughtful software and exploring new technology through personal projects.`;
   }
 
   const aboutLinks = document.getElementById('about-links');
@@ -113,6 +113,59 @@ const renderHero = (data) => {
   if (contactEmail && data.contact?.email) contactEmail.href = `mailto:${data.contact.email}`;
   if (contactLinkedin && data.contact?.linkedin) contactLinkedin.href = data.contact.linkedin;
   if (contactGithub && data.contact?.github) contactGithub.href = data.contact.github;
+
+  // Hero social buttons
+  const heroLinkedin = document.getElementById('hero-linkedin');
+  const heroGithub = document.getElementById('hero-github');
+  const heroEmail = document.getElementById('hero-email');
+  if (heroLinkedin && data.contact?.linkedin) heroLinkedin.href = data.contact.linkedin;
+  if (heroGithub && data.contact?.github) heroGithub.href = data.contact.github;
+  if (heroEmail && data.contact?.email) heroEmail.href = `mailto:${data.contact.email}`;
+};
+
+// ── Typing animation ────────────────────────────────────────────
+
+const startTyping = () => {
+  const el = document.getElementById('hero-typed');
+  if (!el) return;
+
+  const strings = [
+    'A Software Engineer',
+    'A Full Stack Developer',
+    'A Machine Learning Engineer',
+    'A Global Scholar',
+    'A Problem Solver',
+    'An NYU Engineer',
+    'A Builder',
+  ];
+
+  let sIdx = 0, cIdx = 0, deleting = false;
+
+  const tick = () => {
+    const current = strings[sIdx];
+    if (deleting) {
+      cIdx--;
+      el.textContent = current.slice(0, cIdx);
+      if (cIdx === 0) {
+        deleting = false;
+        sIdx = (sIdx + 1) % strings.length;
+        setTimeout(tick, 450);
+        return;
+      }
+      setTimeout(tick, 38);
+    } else {
+      cIdx++;
+      el.textContent = current.slice(0, cIdx);
+      if (cIdx === current.length) {
+        deleting = true;
+        setTimeout(tick, 2200);
+        return;
+      }
+      setTimeout(tick, 75);
+    }
+  };
+
+  setTimeout(tick, 600);
 };
 
 // ── Render: Experience ──────────────────────────────────────────
@@ -473,6 +526,7 @@ const hydrate = async () => {
 };
 
 hydrate();
+startTyping();
 
 // Footer year
 const yearEl = document.getElementById('current-year');
