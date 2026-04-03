@@ -109,22 +109,34 @@
             <image href="assets/map.svg" width="1000" height="500"/>
 
             <!-- ChessBot — New York, NY -->
-            <g class="map-marker" data-project="ChessBot" data-location="New York, NY"
-               onclick="window.open('https://github.com/ChrisBrasil10/ChessBot','_blank')">
+            <g class="map-marker"
+               data-project="ChessBot"
+               data-location="New York, NY"
+               data-tech="C++|Python|Git"
+               data-repo="https://github.com/ChrisBrasil10/ChessBot"
+               data-desc="Prototyped a functional smart chessboard controlled through voice command in 3 months.|Assembled a linear motion system with an electromagnet to move pieces automatically.|Used Google Cloud's Speech-to-Text API to interpret commands and trigger piece movement.|Awarded the Gunter Georgi Award for Outstanding Engineering Innovation at NYU.">
               <circle class="map-dot" cx="305" cy="185" r="10" fill="#3EA8ED"/>
               <text class="map-label" x="305" y="185" text-anchor="middle" dy="0.35em">ChessBot</text>
             </g>
 
             <!-- Rapid Ride — Hanoi, Vietnam -->
-            <g class="map-marker" data-project="Rapid Ride" data-location="Hanoi, Vietnam"
-               onclick="window.open('https://github.com/ChrisBrasil10/Rapid-Ride','_blank')">
+            <g class="map-marker"
+               data-project="Rapid Ride"
+               data-location="Hanoi, Vietnam"
+               data-tech="GAML|SQL|Agent-Based Modeling"
+               data-repo="https://github.com/ChrisBrasil10/Rapid-Ride"
+               data-desc="Utilized digital twin technology to test a virtual scooter program and assess environmental impacts.|Secured first place for best pitch and program at VinUniversity's competition.|Created interactive map-based visualizations to show air quality and traffic improvements.">
               <circle class="map-dot" cx="800" cy="244" r="10" fill="#FF9F0A"/>
               <text class="map-label" x="800" y="244" text-anchor="middle" dy="0.35em">Rapid Ride</text>
             </g>
 
             <!-- Health Reflect — Abu Dhabi, UAE -->
-            <g class="map-marker" data-project="Health Reflect" data-location="Abu Dhabi, UAE"
-               onclick="window.open('https://github.com/ChrisBrasil10/Health-Reflect','_blank')">
+            <g class="map-marker"
+               data-project="Health Reflect"
+               data-location="Abu Dhabi, UAE"
+               data-tech="HTML/CSS|JavaScript|Python|Raspberry Pi|AQI API"
+               data-repo="https://github.com/ChrisBrasil10/Health-Reflect"
+               data-desc="Implemented an intelligent smart mirror to monitor indoor air quality at NYU Abu Dhabi.|Configured the system on a Raspberry Pi using low-level frameworks to process environmental sensor data.|Integrated real-time data alerts for users when air quality levels became hazardous.">
               <circle class="map-dot" cx="658" cy="235" r="10" fill="#09CF75"/>
               <text class="map-label" x="658" y="235" text-anchor="middle" dy="0.35em">Health Reflect</text>
             </g>
@@ -133,6 +145,22 @@
           <div class="projects__map-info">
             <div class="projects__map-location" id="map-location">My Projects</div>
             <div class="projects__map-title" id="map-title">Worldwide.</div>
+          </div>
+
+          <!-- Project detail drawer -->
+          <div class="project-drawer" id="project-drawer">
+            <button class="project-drawer__close" id="drawer-close" aria-label="Close">×</button>
+            <div class="project-drawer__body">
+              <div class="project-drawer__left">
+                <span class="project-drawer__location" id="drawer-location"></span>
+                <h3 class="project-drawer__name" id="drawer-name"></h3>
+                <ul class="project-drawer__desc" id="drawer-desc"></ul>
+              </div>
+              <div class="project-drawer__right">
+                <div class="project-drawer__tech" id="drawer-tech"></div>
+                <a class="project-drawer__link" id="drawer-link" href="#" target="_blank" rel="noopener">View on GitHub →</a>
+              </div>
+            </div>
           </div>
         </div>
       </section>

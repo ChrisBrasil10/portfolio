@@ -527,12 +527,15 @@ const hydrate = async () => {
 hydrate();
 startTyping();
 
-// ── Projects map hover ──────────────────────────────────────────
+// ── Projects map interactions ───────────────────────────────────
 
 const mapLocationEl = document.getElementById('map-location');
 const mapTitleEl    = document.getElementById('map-title');
+const drawer        = document.getElementById('project-drawer');
+const drawerClose   = document.getElementById('drawer-close');
 
 document.querySelectorAll('.map-marker').forEach(marker => {
+  // Hover: update bottom-left label
   marker.addEventListener('mouseenter', () => {
     if (mapLocationEl) mapLocationEl.textContent = marker.dataset.location;
     if (mapTitleEl)    mapTitleEl.textContent    = marker.dataset.project;
@@ -541,7 +544,28 @@ document.querySelectorAll('.map-marker').forEach(marker => {
     if (mapLocationEl) mapLocationEl.textContent = 'My Projects';
     if (mapTitleEl)    mapTitleEl.textContent    = 'Worldwide.';
   });
+
+  // Click: open detail drawer
+  marker.addEventListener('click', () => {
+    const { project, location, tech, desc, repo } = marker.dataset;
+
+    document.getElementById('drawer-location').textContent = location;
+    document.getElementById('drawer-name').textContent     = project;
+    document.getElementById('drawer-link').href            = repo;
+
+    const techEl = document.getElementById('drawer-tech');
+    techEl.innerHTML = tech.split('|').map(t => `<span>${t}</span>`).join('');
+
+    const descEl = document.getElementById('drawer-desc');
+    descEl.innerHTML = desc.split('|').map(d => `<li>${d}</li>`).join('');
+
+    drawer.classList.add('open');
+  });
 });
+
+if (drawerClose) {
+  drawerClose.addEventListener('click', () => drawer.classList.remove('open'));
+}
 
 // Footer year
 const yearEl = document.getElementById('current-year');
